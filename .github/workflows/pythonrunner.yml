@@ -8,7 +8,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Set up Python
+    - name: Use Python 3.x
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
@@ -17,6 +17,8 @@ jobs:
       with:
         node-version: '16.x'
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
+        npm install
     - name: Run Python script
       run: python script.py
