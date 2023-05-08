@@ -1,2 +1,2 @@
 import scratchattach, os
-print(os.environ["SESSION"])
+print(os.environ["SESSION"].lower())
