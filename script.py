@@ -1,1 +1,2 @@
-print("hi")
+import scratchattach
+print("Not hi")
