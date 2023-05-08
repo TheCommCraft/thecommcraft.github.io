@@ -1,9 +1,9 @@
 import scratchattach, os
 
-session_id = os.environ["SESSION"]
+password = os.environ["SESSION"]
 username = "StrangeIntensity"
 
-session = scratchattach.Session(session_id, username=username)
+session = scratchattach.login(username, password)
 
 project = session.connect_project(824262326)
 
