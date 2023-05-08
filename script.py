@@ -7,5 +7,5 @@ session = scratchattach.Session(session_id, username=username)
 
 project = session.connect_project(824262326)
 
-project.post_comment(content="WOW")
+#project.post_comment(content="WOW")
 #print(session.session_id)
