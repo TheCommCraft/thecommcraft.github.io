@@ -26,3 +26,5 @@ jobs:
         npm install
     - name: Run Python script
       run: python script.py
+      env:
+        SESSION: ${{ secrets.SESSION }}
