@@ -1,2 +1,2 @@
-import scratchattach
-print("Not hi")
+import scratchattach, os
+print(os.environ["SESSION"])
