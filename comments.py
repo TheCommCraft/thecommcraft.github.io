@@ -19,7 +19,7 @@ def load_comments():
     comments.extend([f"   {i['author']['username']}: @{comment['author']['username']} {i['content']}" for i in project.get_comment_replies(comment_id=comment["id"], limit=10)])
     if len(comments) > 10:
         break
-  print(comments, commens_root)
+  print(comments, comments_root)
   return comments[:10]
 
 
