@@ -10,6 +10,7 @@ client = scratchattach.CloudRequests(conn)
 
 @client.request(name="load")
 def load_comments():
+  print("loading comments")
   comments_root = project.comments(limit=10)
   comments = []
   for comment in comments_root:
@@ -17,8 +18,11 @@ def load_comments():
     comments.extend([f"   {i['author']['username']}: @{comment['author']['username']} {i['content']}" for i in project.get_comment_replies(comment_id=comment["id"], limit=10)])
     if len(comments) > 10:
         break
+  print(comments)
   return comments[:10]
 
+
+print("running server")
 client.run(thread=True)
 time.sleep(1800)
 exit()
