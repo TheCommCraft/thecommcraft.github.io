@@ -11,6 +11,7 @@ client = scratchattach.CloudRequests(conn)
 @client.request(name="load")
 def load_comments():
   print("loading comments")
+  project.update()
   comments_root = project.comments(limit=10)
   comments = []
   for comment in comments_root:
