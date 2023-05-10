@@ -1,4 +1,6 @@
 import scratchattach, os, time
+from threading import Thread
+
 
 session_id = os.environ["SESSION"]
 username = "StrangeIntensity"
@@ -26,9 +28,10 @@ def load_comments():
 
 
 print("running server")
-client.run(thread=True)
+t = Thread(target=client.run)
+t.start()
 time.sleep(1800)
-client.stop()
+t.stop()
 raise Exception("The operation was ended.")
 #project = session.connect_project(824262326)
 
