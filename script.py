@@ -7,7 +7,7 @@ def run_comments():
 t_comments = Thread(target=run_comments)
 t_comments.start()
 
-time.sleep(180)
+time.sleep(1800)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
