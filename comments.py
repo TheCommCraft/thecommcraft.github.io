@@ -21,7 +21,7 @@ def load_comments():
   comments = []
   for comment in comments_root:
     comments.append(f"{comment['author']['username']}: {comment['content']}")
-    comments.extend([f"   {i['author']['username']}: @{comment['author']['username']} {i['content']}" for i in get(f"https://api.scratch.mit.edu/users/TheCommCraft/projects/847888429/comments/{comment[id]}/replies?limit=10").json()])
+    comments.extend([f"        {i['author']['username']}: @{comment['author']['username']} {i['content']}" for i in get(f"https://api.scratch.mit.edu/users/TheCommCraft/projects/847888429/comments/{comment['id']}/replies?limit=10").json()])
     if len(comments) > 10:
         break
   print(comments, comments_root)
