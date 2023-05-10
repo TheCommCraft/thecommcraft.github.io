@@ -1,5 +1,6 @@
 import scratchattach, os, time
 from threading import Thread
+from requests import get
 
 
 session_id = os.environ["SESSION"]
@@ -16,7 +17,7 @@ client = scratchattach.CloudRequests(conn)
 def load_comments():
   print("loading comments")
   project.update()
-  comments_root = project.comments(limit=10)
+  comments_root = get("https://api.scratch.mit.edu/users/TheCommCraft/projects/847888429/comments/?limit=10").json()#project.comments(limit=10)
   comments = []
   for comment in comments_root:
     comments.append(f"{comment['author']['username']}: {comment['content']}")
