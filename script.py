@@ -1,5 +1,6 @@
 from threading import Thread
-import time, os
+import time, os, signal 
+
 def run_comments():
   import comments
 
@@ -8,4 +9,5 @@ t_comments.start()
 
 time.sleep(180)
 print("Done")
-os.system("taskkill /F /IM python.exe")
+pgid = os.getpgid(os.getpid())
+os.killpg(pgid, signal.SIGTERM)
