@@ -28,7 +28,8 @@ def load_comments():
 print("running server")
 client.run(thread=True)
 time.sleep(1800)
-raise Exception("The operation was cancelled.")
+client.stop()
+raise Exception("The operation was ended.")
 #project = session.connect_project(824262326)
 
 #project.post_comment(content="WOW")
