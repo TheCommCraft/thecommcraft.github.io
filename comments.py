@@ -3,6 +3,8 @@ import scratchattach, os, time
 session_id = os.environ["SESSION"]
 username = "StrangeIntensity"
 
+exit()
+
 session = scratchattach.Session(session_id, username=username)
 project = session.connect_project(847888429)
 conn = session.connect_cloud(847888429)
