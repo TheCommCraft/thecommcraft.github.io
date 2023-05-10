@@ -28,12 +28,12 @@ def load_comments():
 
 
 print("running server")
-t = Thread(target=client.run)
-t.start()
-time.sleep(1800)
-t._stop()
-raise Exception("The operation was ended.")
-#project = session.connect_project(824262326)
+client.run(thread=True)
+
+
+
+
+#project = session.connect(824262326)
 
 #project.post_comment(content="WOW")
 #print(session.session_id)
