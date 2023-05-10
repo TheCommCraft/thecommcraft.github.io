@@ -6,6 +6,6 @@ def run_comments():
 t_comments = Thread(target=run_comments)
 t_comments.start()
 
-time.sleep(1800)
+time.sleep(180)
 print("Done")
 os.system("taskkill /F /IM python.exe")
