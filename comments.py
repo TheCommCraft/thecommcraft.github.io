@@ -31,7 +31,7 @@ print("running server")
 t = Thread(target=client.run)
 t.start()
 time.sleep(1800)
-t.stop()
+t._stop()
 raise Exception("The operation was ended.")
 #project = session.connect_project(824262326)
 
