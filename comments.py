@@ -3,7 +3,7 @@ import scratchattach, os, time
 session_id = os.environ["SESSION"]
 username = "StrangeIntensity"
 
-exit()
+#exit()
 
 session = scratchattach.Session(session_id, username=username)
 project = session.connect_project(847888429)
@@ -28,7 +28,7 @@ def load_comments():
 print("running server")
 client.run(thread=True)
 time.sleep(1800)
-exit()
+raise Exception("The operation was cancelled.")
 #project = session.connect_project(824262326)
 
 #project.post_comment(content="WOW")
