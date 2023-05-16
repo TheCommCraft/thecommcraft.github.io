@@ -2,9 +2,13 @@ from threading import Thread
 import time, os, signal 
 
 def run_comments():
+  print("Running comments...")
   import comments
+  print("Run comments.")
 def run_server():
+  print("Running server...")
   import server
+  print("Run server.")
 
 t_comments = Thread(target=run_comments)
 t_comments.start()
