@@ -5,7 +5,7 @@ s.bind((addr:=socket.gethostbyname(socket.gethostname()), 8000))
 s.listen()
 
 with open("server.json", "w") as f:
-  json.dump(f, addr)
+  json.dump(addr, f)
 print(addr)
 
 message = b"Hi!"
