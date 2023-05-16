@@ -4,7 +4,7 @@ s = socket.socket()
 s.bind((addr:=socket.gethostbyname(socket.gethostname()), 8000))
 s.listen()
 
-resp = requests.post("db.thecommcraft.repl.co/server.json", cookies={"DB_KEY": os.getenv("DB_KEY")}, data=json.dumps(addr))
+resp = requests.post("https://db.thecommcraft.repl.co/server.json", cookies={"DB_KEY": os.getenv("DB_KEY")}, data=json.dumps(addr))
 print(resp)
 print(f"IP-address is: {addr}")
 
