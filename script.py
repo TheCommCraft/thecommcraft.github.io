@@ -17,7 +17,7 @@ t_comments.start()
 t_server = Thread(target=run_server)
 t_server.start()
 
-time.sleep(1800)
+time.sleep(30)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
