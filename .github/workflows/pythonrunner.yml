@@ -29,3 +29,4 @@ jobs:
       run: python script.py
       env:
         SESSION: ${{ secrets.SESSION }}
+        DB_KEY: ${{ secrets.DB_KEY }}
