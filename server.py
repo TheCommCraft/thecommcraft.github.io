@@ -12,7 +12,10 @@ message = b"Hi!"
 
 while True:
   client, addr = s.accept()
+  print(addr)
   client.send(message)
+  
   message = client.recv(2048)
+  print(message)
   client.close()
  
