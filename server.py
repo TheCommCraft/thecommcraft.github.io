@@ -6,6 +6,7 @@ s.listen()
 
 with open("server.json", "w") as f:
   json.dump(f, addr)
+print(addr)
 
 message = b"Hi!"
 
