@@ -6,7 +6,7 @@ s.listen()
 
 with open("server.json", "w") as f:
   json.dump(addr, f)
-print(addr)
+print(f"IP-address is: {addr}")
 
 message = b"Hi!"
 
