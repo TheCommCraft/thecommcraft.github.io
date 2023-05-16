@@ -1,6 +1,8 @@
 from threading import Thread
 import time, os, signal 
 
+print("Running all")
+
 def run_comments():
   print("Running comments...")
   import comments
