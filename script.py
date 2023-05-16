@@ -13,7 +13,7 @@ def run_server():
 t_comments = Thread(target=run_comments)
 t_comments.start()
 t_server = Thread(target=run_server)
-t_server.start()
+#t_server.start()
 
 time.sleep(1800)
 print("Done")
