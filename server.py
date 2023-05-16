@@ -1,8 +1,11 @@
-import socket
+import socket, json
 
 s = socket.socket()
-s.bind((socket.gethostbyname(socket.gethostname()), 8000))
+s.bind((addr:=socket.gethostbyname(socket.gethostname()), 8000))
 s.listen()
+
+with open("server.json", "w") as f:
+  json.dump(f, addr)
 
 message = b"Hi!"
 
