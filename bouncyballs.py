@@ -91,7 +91,7 @@ def on_request(request):
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
   level_content = "&".join(level_content)
-  username = client.last_requester
+  username = client.get_requester()
   try:
     user = find_user(username)
   except UnknownUserError:
@@ -100,13 +100,15 @@ def save_level(level_id, level_name, *level_content):
     level = find_level(level_id)
   except UnknownLevelError:
     level = create_level(level_id)
-  if level.get("creator", client.last_requester) != client.last_requester:
+  if level.get("creator", username) != username:
     return "error"
-  newvalues = {"content": level_content, "name": level_name, "creator": client.last_requester}
+  newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
   if level_content == "":
     newvalues.pop("content")
+  if not "creator" in level:
+    update_user(username, {"owns": user.get("owns", []) + [level_id], "can_edit": user.get("can_edit", []) + [level_id]})
   update_level(level_id, newvalues)
   return "success"
 
