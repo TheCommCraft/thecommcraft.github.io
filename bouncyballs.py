@@ -100,7 +100,7 @@ def save_level(level_id, level_name, *level_content):
     level = find_level(level_id)
   except UnknownLevelError:
     level = create_level(level_id)
-  if level.get("creator", client.last_requester) != client.last_requeser:
+  if level.get("creator", client.last_requester) != client.last_requester:
     return "error"
   newvalues = {"content": level_content, "name": level_name, "creator": client.last_requester}
   if level_name == "Nothing":
