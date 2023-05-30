@@ -42,10 +42,10 @@ def on_set(event): #Called when a cloud var is set
 #events.start(thread=True)
 
 def find_user(username):
-  try:
-    return users.find_one({"username": username})
-  except KeyError:
+  user = users.find_one({"username": username})
+  if user is None:
     raise UnknownUserError
+  return user
     
 def update_user(username, newvalues):
     users.update_one({"username": username}, {"$set": newvalues})
@@ -55,10 +55,10 @@ def create_user(username):
   return user
 
 def find_level(levelid):
-  try:
-    return levels.find_one({"level_id": levelid})
-  except KeyError:
+  level = levels.find_one({"level_id": levelid})
+  if level is None:
     raise UnknownLevelError
+  return level
     
 def update_level(levelid, newvalues):
     levels.update_one({"level_id": levelid}, {"$set": newvalues})
@@ -94,11 +94,11 @@ def save_level(level_id, level_name, *level_content):
   username = client.last_requester
   try:
     user = find_user(username)
-  except:
+  except UnknownUserError:
     user = create_user(username)
   try:
     level = find_level(level_id)
-  except:
+  except UnknownLevelError:
     level = create_level(level_id)
   if level.get("creator", client.last_requester) != client.last_requeser:
     return "error"
