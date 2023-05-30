@@ -1,5 +1,9 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import os
+
+PASSWORD = os.getenv("MONGO_DB_KEY")
+SESSION_ID = os.getenv("SESSION")
 
 uri = f"mongodb+srv://TheCommCraft:{PASSWORD}@bouncyballscluster.cdqbnlp.mongodb.net/?retryWrites=true&w=majority"
 
