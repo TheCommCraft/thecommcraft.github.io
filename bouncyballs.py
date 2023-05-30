@@ -107,7 +107,9 @@ def save_level(level_id, level_name, *level_content):
     newvalues.pop("name")
   if level_content == "":
     newvalues.pop("content")
-  if not "creator" in level:
+  if "creator" in level:
+    newvalues.pop("creator")
+  else:
     update_user(username, {"owns": user.get("owns", []) + [level_id], "can_edit": user.get("can_edit", []) + [level_id]})
   update_level(level_id, newvalues)
   return "success"
