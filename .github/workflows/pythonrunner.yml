@@ -30,3 +30,4 @@ jobs:
       env:
         SESSION: ${{ secrets.SESSION }}
         DB_KEY: ${{ secrets.DB_KEY }}
+        MONGO_DB_KEY: ${{ secrets.MONGO_DB_KEY }}
