@@ -24,7 +24,6 @@ print("Pinged your deployment. You successfully connected to MongoDB!")
 
 db = client["maindatabase"]
 users = db["users"]
-#tabs = data["tabs"]
 levels = db["levels"]
 logs = db["logs"]
 
@@ -119,7 +118,7 @@ def load_level(level_id):
   level = find_level(level_id)
   level_content = level["content"]
   update_level(level_id, {"views": level.get("views", 0) + 1})
-  tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
+  #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
 @client.request(name="loadlevels")
