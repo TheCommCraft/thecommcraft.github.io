@@ -59,8 +59,10 @@ def find_level(levelid):
     raise UnknownLevelError
   return level
     
-def update_level(levelid, newvalues):
-    levels.update_one({"level_id": levelid}, {"$set": newvalues})
+def update_level(levelid, _set=None, _inc):
+    _set = {} if _set is None else _set
+    _inc = {} if _inc is None else _inc
+    levels.update_one({"level_id": levelid}, {"$set": _set, "$inc": _inc})
 
 def create_level(levelid):
   levels.insert_one(level:={"level_id": levelid})
@@ -115,7 +117,7 @@ def save_level(level_id, level_name, *level_content):
 def load_level(level_id):
   level = find_level(level_id)
   level_content = level["content"]
-  update_level(level_id, {"views": level.get("views", 0) + 1})
+  update_level(level_id, _inc={"views": 1})
   #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
