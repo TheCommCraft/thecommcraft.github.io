@@ -16,10 +16,10 @@ session_id = os.getenv("SESSION")
 uri = f"mongodb+srv://TheCommCraft:{password}@bouncyballscluster.cdqbnlp.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'))
+mongoclient = MongoClient(uri, server_api=ServerApi('1'))
 
 # Send a ping to confirm a successful connection
-client.admin.command('ping')
+mongoclient.admin.command('ping')
 print("Pinged your deployment. You successfully connected to MongoDB!")
 
 db = client["maindatabase"]
@@ -29,6 +29,7 @@ logs = db["logs"]
 
 session = Session(session_id, username="StrangeIntensity")
 conn = session.connect_cloud(856420361)
+proj = session.connect_project(856420361)
 
 events = CloudEvents(856420361)
           
@@ -101,6 +102,8 @@ def save_level(level_id, level_name, *level_content):
     level = create_level(level_id)
   if level.get("creator", username) != username:
     return "error"
+  if level_name == "comments":
+    level_name = list(filter(lambda x: x["author"]["username"] == username, project.comments()))[0]["content"]
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
