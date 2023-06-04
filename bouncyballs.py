@@ -60,7 +60,7 @@ def find_level(levelid):
     raise UnknownLevelError
   return level
     
-def update_level(levelid, _set=None, _inc):
+def update_level(levelid, _set=None, _inc=None):
     _set = {} if _set is None else _set
     _inc = {} if _inc is None else _inc
     levels.update_one({"level_id": levelid}, {"$set": _set, "$inc": _inc})
