@@ -84,6 +84,9 @@ def find_ran_levels(amount=20):
 def find_levels():
   return random.sample((lev_set:=set(find_ran_levels() + find_pop_levels())), min(20, len(lev_set)))
 
+def get_comments():
+  return scratchattach.requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
+
 @client.event
 def on_request(request):
   print("Received request")
@@ -103,7 +106,7 @@ def save_level(level_id, level_name, *level_content):
   if level.get("creator", username) != username:
     return "error"
   if level_name == "comments":
-    level_name = list(filter(lambda x: x["author"]["username"] == username, proj.comments()))[0]["content"]
+    level_name = list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"]
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
