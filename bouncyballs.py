@@ -41,6 +41,10 @@ def on_set(event): #Called when a cloud var is set
 
 #events.start(thread=True)
 
+class hashabledict(dict):
+    def __hash__(self):
+        return hash(tuple(sorted(self.items())))
+
 def find_user(username):
   user = users.find_one({"username": username})
   if user is None:
@@ -81,7 +85,7 @@ def find_pop_levels():
   return return_levels
 
 def find_levels():
-  return random.sample((lev_set:=set(find_ran_levels() + find_pop_levels())), min(20, len(lev_set)))
+  return random.sample((lev_set:=set((hashabledict(i) for i in find_ran_levels() + find_pop_levels()))), min(20, len(lev_set)))
 
 def get_comments():
   return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
