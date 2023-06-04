@@ -1,7 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from threading import Thread
-import os, time, random
+import os, time, random, requests
 from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents
 
 class UnknownUserError(Exception):
@@ -85,7 +85,7 @@ def find_levels():
   return random.sample((lev_set:=set(find_ran_levels() + find_pop_levels())), min(20, len(lev_set)))
 
 def get_comments():
-  return scratchattach.requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
+  return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
 
 @client.event
 def on_request(request):
