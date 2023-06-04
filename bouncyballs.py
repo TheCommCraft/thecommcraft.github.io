@@ -22,7 +22,7 @@ mongoclient = MongoClient(uri, server_api=ServerApi('1'))
 mongoclient.admin.command('ping')
 print("Pinged your deployment. You successfully connected to MongoDB!")
 
-db = client["maindatabase"]
+db = mongoclient["maindatabase"]
 users = db["users"]
 levels = db["levels"]
 logs = db["logs"]
