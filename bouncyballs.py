@@ -77,7 +77,7 @@ def find_ran_levels(amount=20):
 
 def find_pop_levels():
   return_levels = find_ran_levels(100)
-  return_levels = list(sorted(return_levels, key = lambda x: x.get("views", 0), reversed=True))[:20]
+  return_levels = list(sorted(return_levels, key = lambda x: x.get("views", 0), reverse=True))[:20]
   return return_levels
 
 def find_levels():
