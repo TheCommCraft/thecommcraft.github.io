@@ -85,7 +85,7 @@ def find_pop_levels():
   return return_levels
 
 def find_levels():
-  return random.sample((lev_set:=set((hashabledict(i) for i in find_ran_levels() + find_pop_levels()))), min(20, len(lev_set)))
+  return random.sample((lev_set:=list(set((hashabledict(i) for i in find_ran_levels() + find_pop_levels())))), min(20, len(lev_set)))
 
 def get_comments():
   return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
