@@ -103,7 +103,7 @@ def save_level(level_id, level_name, *level_content):
   if level.get("creator", username) != username:
     return "error"
   if level_name == "comments":
-    level_name = list(filter(lambda x: x["author"]["username"] == username, project.comments()))[0]["content"]
+    level_name = list(filter(lambda x: x["author"]["username"] == username, proj.comments()))[0]["content"]
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
