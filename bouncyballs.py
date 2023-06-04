@@ -72,14 +72,13 @@ def create_level(levelid):
 def random_level():
   return random.choice(levels.find())
   
+def find_ran_levels(amount=20):
+  return random.sample((result:=list(levels.find())), min(len(result), amount))
 
 def find_pop_levels():
   return_levels = find_ran_levels(100)
   return_levels = list(sorted(return_levels, key = lambda x: x.get("views", 0), reversed=True))[:20]
   return return_levels
-
-def find_ran_levels(amount=20):
-  return random.sample((result:=levels.find()), min(len(result), amount))
 
 def find_levels():
   return random.sample((lev_set:=set(find_ran_levels() + find_pop_levels())), min(20, len(lev_set)))
