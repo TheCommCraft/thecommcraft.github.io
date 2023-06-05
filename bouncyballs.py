@@ -137,7 +137,7 @@ def load_level(level_id):
 def load_levels():
   found_levels = find_levels()
   return_levels = []
-  [return_levels.extend((i.get("id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
 
 client.run(thread=True)
