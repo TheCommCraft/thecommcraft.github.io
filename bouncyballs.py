@@ -142,7 +142,3 @@ def load_levels():
   return return_levels
 
 client.run(thread=True)
-
-while True:
-  time.sleep(1000)
-  data.write()
