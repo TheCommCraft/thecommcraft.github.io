@@ -21,8 +21,12 @@ def _update(self):
             try:
                 self.connection._connect(cloud_host=self.connection.cloud_host)
                 self.connection._handshake()
-                self.connection.websocket.recv()
+                try:
+                    data = self.connection.websocket.recv().split('\n')
+                except:
+                    print("problem 1")
             except Exception:
+                print("problem 2")
                 if "on_disconnect" in self._events:
                     self._events["on_disconnect"]()
                     
