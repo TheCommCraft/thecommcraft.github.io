@@ -32,7 +32,20 @@ conn = session.connect_cloud(856420361)
 proj = session.connect_project(856420361)
 
 events = CloudEvents(856420361)
-          
+
+_last_timestamp = 0
+
+def last_timestamp():
+  global _last_timestamp
+  return _last_timestamp
+
+def set_last_timestamp(timestamp):
+  global _last_timestamp
+  _last_timestamp = timestamp
+  print(f"Set timestamp to {timestamp}")
+
+CloudRequests.last_timestamp = property(last_timestamp)
+CloudRequests.last_timestamp.setter(set_last_timestamp)
 client = CloudRequests(conn, used_cloud_vars=["1", "2", "3"])
 
 '''@events.event
