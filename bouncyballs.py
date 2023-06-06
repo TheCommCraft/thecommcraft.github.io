@@ -24,9 +24,9 @@ def _update(self):
                 try:
                     data = self.connection.websocket.recv().split('\n')
                 except Exception as e:
-                    print("problem 1: {e}")
+                    print(f"problem 1: {e}")
             except Exception as e:
-                print("problem 2: {e}")
+                print(f"problem 2: {e}")
                 if "on_disconnect" in self._events:
                     self._events["on_disconnect"]()
                     
