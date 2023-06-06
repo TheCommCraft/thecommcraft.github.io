@@ -23,7 +23,7 @@ t_server.start()
 t_bouncyballs = Thread(target=run_bouncyballs)
 t_bouncyballs.start()
 
-time.sleep(100)
+time.sleep(300)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
