@@ -4,6 +4,7 @@ from threading import Thread
 import os, time, random, requests
 from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents
 
+"""
 def _update(self):
     while True:
         try:
@@ -33,6 +34,7 @@ def _update(self):
                     self._events["on_disconnect"]()
                     
 WsCloudEvents._update = _update
+"""
 
 class UnknownUserError(Exception):
   pass
@@ -142,6 +144,8 @@ def on_request(request):
 
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
+  if time.time() - client.get_timestamp() > 20:
+    return
   level_content = "&".join(level_content)
   username = client.get_requester()
   try:
@@ -173,16 +177,19 @@ def save_level(level_id, level_name, *level_content):
 
 @client.request(name="loadlevel")
 def load_level(level_id):
+  if time.time() - client.get_timestamp() > 20:
+    return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
-  if time.time() - client.get_timestamp() < 10:
-    update_level(level_id, _inc={"views": 1})
+  update_level(level_id, _inc={"views": 1})
   #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
 @client.request(name="loadlevels")
 def load_levels():
+  if time.time() - client.get_timestamp() > 20:
+    return
   found_levels = find_levels()
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
