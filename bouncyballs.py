@@ -19,12 +19,14 @@ def _update(self):
                     self._events["on_"+activity["method"]](self.Event(user=None, var=activity["name"][2:], name=activity["name"][2:], value=activity["value"], timestamp=time.time()*10000))
         except Exception:
             try:
-                self.connection._connect(cloud_host=self.connection.cloud_host)
-                self.connection._handshake()
-                try:
-                    data = self.connection.websocket.recv().split('\n')
-                except Exception as e:
-                    print(f"problem 1: {e}")
+                while True: 
+                    self.connection._connect(cloud_host=self.connection.cloud_host)
+                    self.connection._handshake()
+                    try:
+                        data = self.connection.websocket.recv().split('\n')
+                        break
+                    except Exception as e:
+                        print(f"problem 1: {e}")
             except Exception as e:
                 print(f"problem 2: {e}")
                 if "on_disconnect" in self._events:
