@@ -17,7 +17,7 @@ def _update(self):
             for activity in result:
                 if "on_"+activity["method"] in self._events:
                     self._events["on_"+activity["method"]](self.Event(user=None, var=activity["name"][2:], name=activity["name"][2:], value=activity["value"], timestamp=time.time()*10000))
-       except Exception:
+        except Exception:
             try:
                 self.connection._connect(cloud_host=self.connection.cloud_host)
                 self.connection._handshake()
