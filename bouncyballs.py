@@ -42,6 +42,12 @@ class UnknownUserError(Exception):
 class UnknownLevelError(Exception):
   pass
 
+def get_real_timestamp():
+    logs = _cloud.get_cloud_logs(client.project_id, filter_by_var_named="TO_HOST")
+    activity = list(filter(lambda x : "."+client.last_request_id in x["value"], logs))
+    if len(activity) > 0:
+        return activity[0]["timestamp"]
+
 password = os.getenv("MONGO_DB_KEY")
 session_id = os.getenv("SESSION")
 
@@ -144,7 +150,7 @@ def on_request(request):
 
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
-  if time.time() - client.get_timestamp() > 20:
+  if time.time() - get_real_timestamp() / 1000 > 20:
     return
   level_content = "&".join(level_content)
   username = client.get_requester()
@@ -177,7 +183,7 @@ def save_level(level_id, level_name, *level_content):
 
 @client.request(name="loadlevel")
 def load_level(level_id):
-  if time.time() - client.get_timestamp() > 20:
+  if time.time() - get_real_timestamp() / 1000 > 20:
     return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
@@ -188,7 +194,7 @@ def load_level(level_id):
 
 @client.request(name="loadlevels")
 def load_levels():
-  if time.time() - client.get_timestamp() > 20:
+  if time.time() - get_real_timestamp() / 1000 > 20:
     return
   found_levels = find_levels()
   return_levels = []
