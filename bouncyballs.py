@@ -2,7 +2,31 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from threading import Thread
 import os, time, random, requests
-from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents
+from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents
+
+def _update(self):
+    while True:
+        try:
+            data = self.connection.websocket.recv().split('\n')
+            result = []
+            for i in data:
+                try:
+                    result.append(json.loads(i))
+                except Exception:
+                    pass
+            for activity in result:
+                if "on_"+activity["method"] in self._events:
+                    self._events["on_"+activity["method"]](self.Event(user=None, var=activity["name"][2:], name=activity["name"][2:], value=activity["value"], timestamp=time.time()*10000))
+       except Exception:
+            try:
+                self.connection._connect(cloud_host=self.connection.cloud_host)
+                self.connection._handshake()
+                self.connection.websocket.recv()
+            except Exception:
+                if "on_disconnect" in self._events:
+                    self._events["on_disconnect"]()
+                    
+WsCloudEvents._update = _update
 
 class UnknownUserError(Exception):
   pass
@@ -41,7 +65,7 @@ def last_timestamp(self):
 def set_last_timestamp(self, timestamp):
   global _last_timestamp
   _last_timestamp = timestamp
-  print(f"self.ws_data is {getattr(self, 'ws_data', 'not existing')}")
+  #print(f"self.ws_data is {getattr(self, 'ws_data', 'not existing')}")
   print(f"Set timestamp to {timestamp}")
 
 CloudRequests.last_timestamp = property(last_timestamp)
