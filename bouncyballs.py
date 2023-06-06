@@ -129,7 +129,8 @@ def save_level(level_id, level_name, *level_content):
 def load_level(level_id):
   level = find_level(level_id)
   level_content = level["content"]
-  update_level(level_id, _inc={"views": 1})
+  if time.time() - client.get_timestamp() < 10:
+    update_level(level_id, _inc={"views": 1})
   #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
