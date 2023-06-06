@@ -35,10 +35,10 @@ events = CloudEvents(856420361)
 
 _last_timestamp = 0
 
-def last_timestamp():
+def last_timestamp(self):
   global _last_timestamp
   return _last_timestamp
-def set_last_timestamp(timestamp):
+def set_last_timestamp(self, timestamp):
   global _last_timestamp
   _last_timestamp = timestamp
   print(f"Set timestamp to {timestamp}")
