@@ -2,7 +2,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from threading import Thread
 import os, time, random, requests
-from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents
+from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs
 
 """
 def _update(self):
@@ -43,7 +43,7 @@ class UnknownLevelError(Exception):
   pass
 
 def get_real_timestamp():
-    logs = _cloud.get_cloud_logs(client.project_id, filter_by_var_named="TO_HOST")
+    logs = get_cloud_logs(client.project_id, filter_by_var_named="TO_HOST")
     activity = list(filter(lambda x : "."+client.last_request_id in x["value"], logs))
     if len(activity) > 0:
         return activity[0]["timestamp"]
