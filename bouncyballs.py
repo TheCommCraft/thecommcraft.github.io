@@ -66,7 +66,7 @@ def set_last_timestamp(self, timestamp):
   global _last_timestamp
   _last_timestamp = timestamp
   #print(f"self.ws_data is {getattr(self, 'ws_data', 'not existing')}")
-  print(f"Set timestamp to {timestamp}")
+  #print(f"Set timestamp to {timestamp}")
 
 CloudRequests.last_timestamp = property(last_timestamp)
 CloudRequests.last_timestamp = CloudRequests.last_timestamp.setter(set_last_timestamp)
