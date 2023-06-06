@@ -127,6 +127,7 @@ def save_level(level_id, level_name, *level_content):
 
 @client.request(name="loadlevel")
 def load_level(level_id):
+  print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
   if time.time() - client.get_timestamp() < 10:
