@@ -128,10 +128,10 @@ def create_level(levelid):
   return level
 
 def random_level():
-  return random.choice(levels.find())
+  return random.choice(levels.find({"$or": [{"public": {"$exists": False}}, {"public": True}]}))
   
 def find_ran_levels(amount=20):
-  return random.sample((result:=list(levels.find())), min(len(result), amount))
+  return random.sample((result:=list(levels.find({"$or": [{"public": {"$exists": False}}, {"public": True}]}))), min(len(result), amount))
 
 def find_pop_levels():
   return_levels = find_ran_levels(100)
