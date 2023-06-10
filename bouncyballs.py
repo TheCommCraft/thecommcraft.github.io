@@ -42,11 +42,16 @@ class UnknownUserError(Exception):
 class UnknownLevelError(Exception):
   pass
 
-def get_real_timestamp():
+def get_real_timestamp(test=False):
+  if test==False:
     logs = get_cloud_logs(client.project_id, filter_by_var_named="TO_HOST")
     activity = list(filter(lambda x : "."+client.last_request_id in x["value"], logs))
     if len(activity) > 0:
         return activity[0]["timestamp"]
+  logs = get_cloud_logs(clienttest.project_id, filter_by_var_named="TO_HOST")
+  activity = list(filter(lambda x : "."+clienttest.last_request_id in x["value"], logs))
+  if len(activity) > 0:
+      return activity[0]["timestamp"]
 
 password = os.getenv("MONGO_DB_KEY")
 session_id = os.getenv("SESSION")
@@ -66,10 +71,8 @@ levels = db["levels"]
 logs = db["logs"]
 
 session = Session(session_id, username="StrangeIntensity")
-conn = session.connect_cloud(856420361)
-proj = session.connect_project(856420361)
-
-events = CloudEvents(856420361)
+conntest = session.connect_cloud(856420361)
+conn = session.connect_cloud(854229895)
 
 """
 _last_timestamp = 0
@@ -88,6 +91,7 @@ CloudRequests.last_timestamp = CloudRequests.last_timestamp.setter(set_last_time
 """
 
 client = CloudRequests(conn, used_cloud_vars=["1", "2", "3"])
+clienttest = CloudRequests(conntest, used_cloud_vars=["1", "2", "3"])
 
 '''@events.event
 def on_set(event): #Called when a cloud var is set
@@ -141,10 +145,10 @@ def find_pop_levels():
 def find_levels():
   return random.sample((lev_set:=list(set((hashabledict(i) for i in find_ran_levels() + find_pop_levels())))), min(20, len(lev_set)))
 
-def get_comments():
-  return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/856420361/comments").json()
+def get_comments(pid=854229895):
+  return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json()
 
-@client.event
+#@client.event
 def on_request(request):
   print("Received request")
 
@@ -201,4 +205,68 @@ def load_levels():
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
 
+@clienttest.request(name="savelevel")
+def save_level(level_id, level_name, *level_content):
+  if time.time() - get_real_timestamp(True) / 1000 > 20:
+    return
+  level_content = "&".join(level_content)
+  username = clienttest.get_requester()
+  try:
+    user = find_user(username)
+  except UnknownUserError:
+    user = create_user(username)
+  try:
+    level = find_level(level_id)
+  except UnknownLevelError:
+    level = create_level(level_id)
+  if level.get("creator", username) != username:
+    return "error"
+  if level_name == "comments":
+    try:
+      level_name = list(filter(lambda x: x["author"]["username"] == username, get_comments(856420361)))[0]["content"]
+    except:
+      return "No comment"
+  newvalues = {"content": level_content, "name": level_name, "creator": username}
+  if level_name == "Nothing":
+    newvalues.pop("name")
+  if level_content == "":
+    newvalues.pop("content")
+  if "creator" in level:
+    newvalues.pop("creator")
+  else:
+    update_user(username, {"owns": user.get("owns", []) + [level_id], "can_edit": user.get("can_edit", []) + [level_id]})
+  update_level(level_id, newvalues)
+  return "success"
+
+@clienttest.request(name="loadlevel")
+def load_level(level_id):
+  if time.time() - get_real_timestamp(True) / 1000 > 20:
+    return
+  print(f"Finding level {level_id}...")
+  level = find_level(level_id)
+  level_content = level["content"]
+  update_level(level_id, _inc={"views": 1})
+  #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
+  return level_content
+
+@clienttest.request(name="loadlevels")
+def load_levels():
+  if time.time() - get_real_timestamp(True) / 1000 > 20:
+    return
+  found_levels = find_levels()
+  return_levels = []
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  return return_levels
+
+"""
+client.add_request(save_level, name="savelevel")
+client.add_reqeust(load_level, name="loadlevel")
+client.add_reqeust(load_levels, name="loadlevels")
+
+clienttest.add_request(save_level, name="savelevel")
+clienttest.add_reqeust(load_level, name="loadlevel")
+clienttest.add_reqeust(load_levels, name="loadlevels")
+"""
+
 client.run(thread=True)
+clienttest.run(thread=True)
