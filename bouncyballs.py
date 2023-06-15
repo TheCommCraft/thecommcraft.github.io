@@ -232,7 +232,7 @@ def load_levels():
 @clienttest.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
   if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
+    raise Exception
   level_content = "&".join(level_content)
   username = clienttest.get_requester()
   try:
