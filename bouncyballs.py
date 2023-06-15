@@ -97,10 +97,6 @@ twclient = TwCloudRequests(twconn, used_cloud_vars=["1", "2", "3"])
 clienttest = CloudRequests(conntest, used_cloud_vars=["1", "2", "3"])
 twclienttest = TwCloudRequests(twconntest, used_cloud_vars=["1", "2", "3"])
 
-'''@events.event
-def on_set(event): #Called when a cloud var is set
-    print(f"{event.user} set the variable {event.var} to the valuee {event.value} at {event.timestamp}")'''
-
 #events.start(thread=True)
 
 class hashabledict(dict):
@@ -152,9 +148,9 @@ def find_levels():
 def get_comments(pid=854229895):
   return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json()
 
-#@client.event
+@clienttest.event
 def on_request(request):
-  print("Received request")
+  print(f"Received request {request.__dict__}")
 
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
