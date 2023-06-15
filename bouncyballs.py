@@ -299,10 +299,10 @@ def load_levels():
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
 
-client.run(thread=True)
+#client.run(thread=True)
 clienttest.run(thread=True)
-twclient.run(thread=True)
-twclienttest.run(thread=True)
+#twclient.run(thread=True)
+#twclienttest.run(thread=True)
 time.sleep(100)
 print("Done")
 pgid = os.getpgid(os.getpid())
