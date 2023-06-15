@@ -2,7 +2,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from threading import Thread
 import os, time, random, requests, signal
-from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs
+from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs, TwCloudConnection
 
 """
 def _update(self):
@@ -72,7 +72,9 @@ logs = db["logs"]
 
 session = Session(session_id, username="StrangeIntensity")
 conntest = session.connect_cloud(856420361)
+twconntest = TwCloudConnection(project_id=856420361, username="player1000")
 conn = session.connect_cloud(854229895)
+twconn = TwCloudConnection(project_id=854229895, username="player1000")
 
 """
 _last_timestamp = 0
@@ -91,7 +93,9 @@ CloudRequests.last_timestamp = CloudRequests.last_timestamp.setter(set_last_time
 """
 
 client = CloudRequests(conn, used_cloud_vars=["1", "2", "3"])
+twclient = TwCloudRequests(twconn, used_cloud_vars=["1", "2", "3"])
 clienttest = CloudRequests(conntest, used_cloud_vars=["1", "2", "3"])
+twclienttest = TwCloudRequests(twconntest, used_cloud_vars=["1", "2", "3"])
 
 '''@events.event
 def on_set(event): #Called when a cloud var is set
@@ -185,6 +189,10 @@ def save_level(level_id, level_name, *level_content):
   update_level(level_id, newvalues)
   return "success"
 
+@twclient.request(name="savelevel")
+def save_level(level_id, level_name, *level_content):
+  return "TurboWarp"
+
 @client.request(name="loadlevel")
 def load_level(level_id):
   if time.time() - get_real_timestamp() / 1000 > 20:
@@ -196,7 +204,27 @@ def load_level(level_id):
   #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
+@twclient.request(name="loadlevel")
+def load_level(level_id):
+  if time.time() - get_real_timestamp() / 1000 > 20:
+    return
+  print(f"Finding level {level_id}...")
+  level = find_level(level_id)
+  level_content = level["content"]
+  update_level(level_id, _inc={"views": 1})
+  #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
+  return level_content
+
 @client.request(name="loadlevels")
+def load_levels():
+  if time.time() - get_real_timestamp() / 1000 > 20:
+    return
+  found_levels = find_levels()
+  return_levels = []
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  return return_levels
+
+@twclient.request(name="loadlevels")
 def load_levels():
   if time.time() - get_real_timestamp() / 1000 > 20:
     return
