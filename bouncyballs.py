@@ -152,6 +152,10 @@ def get_comments(pid=854229895):
 def on_request(request):
   print(f"Received request {request.__dict__}")
 
+@clienttest.event
+def on_unknown_request(request):
+  print(f"Received urequest {request.__dict__}")
+
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
   if time.time() - get_real_timestamp() / 1000 > 20:
