@@ -300,7 +300,7 @@ def load_levels():
   return return_levels
 
 #client.run(thread=True)
-clienttest.run(thread=False)
+Thread(target=clienttest.run, {"thread":False}).run()
 #twclient.run(thread=True)
 #twclienttest.run(thread=True)
 time.sleep(100)
