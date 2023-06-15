@@ -206,8 +206,6 @@ def load_level(level_id):
 
 @twclient.request(name="loadlevel")
 def load_level(level_id):
-  if time.time() - get_real_timestamp() / 1000 > 20:
-    return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
@@ -226,8 +224,6 @@ def load_levels():
 
 @twclient.request(name="loadlevels")
 def load_levels():
-  if time.time() - get_real_timestamp() / 1000 > 20:
-    return
   found_levels = find_levels()
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
@@ -283,8 +279,6 @@ def load_level(level_id):
 
 @twclienttest.request(name="loadlevel")
 def load_level(level_id):
-  if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
@@ -303,8 +297,6 @@ def load_levels():
 
 @twclienttest.request(name="loadlevels")
 def load_levels():
-  if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
   found_levels = find_levels()
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
