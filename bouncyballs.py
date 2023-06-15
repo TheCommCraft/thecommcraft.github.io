@@ -309,7 +309,7 @@ class loggingmethod:
         self.self = None
     def __get__(self, instance, _):
         def run(*args, **kwargs):
-            print(f"{self.func.__name__}(*{args}, **{kwargs})"
+            print(f"{self.func.__name__}(*{args}, **{kwargs})")
             return self.func(*args, **kwargs) if instance is None else self.func(instance, *args, **kwargs)
         return run
 
