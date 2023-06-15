@@ -191,7 +191,7 @@ def save_level(level_id, level_name, *level_content):
 
 @twclient.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
-  return "TurboWarp"
+  return "Uploading from TurboWarp doesn't work"
 
 @client.request(name="loadlevel")
 def load_level(level_id):
@@ -266,6 +266,10 @@ def save_level(level_id, level_name, *level_content):
   update_level(level_id, newvalues)
   return "success"
 
+@twclienttest.request(name="savelevel")
+def save_level(level_id, level_name, *level_content):
+  return "Uploading from TurboWarp doesn't work"
+
 @clienttest.request(name="loadlevel")
 def load_level(level_id):
   if time.time() - get_real_timestamp(True) / 1000 > 20:
@@ -277,9 +281,29 @@ def load_level(level_id):
   #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
   return level_content
 
+@twclienttest.request(name="loadlevel")
+def load_level(level_id):
+  if time.time() - get_real_timestamp() / 1000 > 20:
+    return
+  print(f"Finding level {level_id}...")
+  level = find_level(level_id)
+  level_content = level["content"]
+  update_level(level_id, _inc={"views": 1})
+  #tabs.update_one({"tab": "popular"}, {"$set": {"content": sorted(tabs.find_one({"tab": "popular"})["content"] + [level_id], key=lambda x: find_level(x)["views"], reversed=True)}})
+  return level_content
+
 @clienttest.request(name="loadlevels")
 def load_levels():
   if time.time() - get_real_timestamp(True) / 1000 > 20:
+    return
+  found_levels = find_levels()
+  return_levels = []
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  return return_levels
+
+@twclienttest.request(name="loadlevels")
+def load_levels():
+  if time.time() - get_real_timestamp() / 1000 > 20:
     return
   found_levels = find_levels()
   return_levels = []
@@ -298,6 +322,8 @@ clienttest.add_reqeust(load_levels, name="loadlevels")
 
 client.run(thread=True)
 clienttest.run(thread=True)
+twclient.run(thread=True)
+twclienttest.run(thread=True)
 time.sleep(1800)
 print("Done")
 pgid = os.getpgid(os.getpid())
