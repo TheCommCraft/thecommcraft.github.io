@@ -1,7 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from threading import Thread
-import os, time, random, requests
+import os, time, random, requests, signal
 from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs
 
 """
@@ -270,3 +270,7 @@ clienttest.add_reqeust(load_levels, name="loadlevels")
 
 client.run(thread=True)
 clienttest.run(thread=True)
+time.sleep(1800)
+print("Done")
+pgid = os.getpgid(os.getpid())
+os.killpg(pgid, signal.SIGINT)
