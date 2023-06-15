@@ -19,9 +19,9 @@ def run_bouncyballs():
 t_comments = Thread(target=run_comments)
 t_comments.start()
 t_server = Thread(target=run_server)
-t_server.start()
+#t_server.start()
 t_bouncyballs = Thread(target=run_bouncyballs)
-t_bouncyballs.start()
+#t_bouncyballs.start()
 
 time.sleep(1800)
 print("Done")
