@@ -4,6 +4,18 @@ from threading import Thread
 import os, time, random, requests, signal
 from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs, TwCloudConnection
 
+
+class loggingmethod:
+    def __init__(self, func):
+        self.func = func
+        self.self = None
+    def __get__(self, instance, _):
+        def run(*args, **kwargs):
+            print(f"{self.func.__name__}(*{args}, **{kwargs})")
+            return self.func(*args, **kwargs) if instance is None else self.func(instance, *args, **kwargs)
+        return run
+
+CloudRequests.call_event = loggingmethod(CloudRequests.call_event)
 """
 def _update(self):
     while True:
@@ -302,18 +314,6 @@ def load_levels():
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
-
-class loggingmethod:
-    def __init__(self, func):
-        self.func = func
-        self.self = None
-    def __get__(self, instance, _):
-        def run(*args, **kwargs):
-            print(f"{self.func.__name__}(*{args}, **{kwargs})")
-            return self.func(*args, **kwargs) if instance is None else self.func(instance, *args, **kwargs)
-        return run
-
-clienttest.call_event = loggingmethod(clienttest.call_event)
                   
 #client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
