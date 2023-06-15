@@ -315,11 +315,11 @@ def load_levels():
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
                   
-#client.run(thread=True)
+client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
-#twclient.run(thread=True)
-#twclienttest.run(thread=True)
-time.sleep(100)
+twclient.run(thread=True)
+twclienttest.run(thread=True)
+time.sleep(1800)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
