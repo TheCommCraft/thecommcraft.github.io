@@ -136,12 +136,12 @@ def save_level(level_id, level_name, *level_content):
   except UnknownLevelError:
     level = create_level(level_id)
   if level.get("creator", username) != username:
-    return "error"
+    return "You are not permitted to edit this"
   if level_name == "comments":
     try:
       level_name = list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"]
     except:
-      return "No comment"
+      return "You haven't made a comment"
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
@@ -209,12 +209,12 @@ def save_level(level_id, level_name, *level_content):
   except UnknownLevelError:
     level = create_level(level_id)
   if level.get("creator", username) != username:
-    return "error"
+    return "You are not permitted to edit this"
   if level_name == "comments":
     try:
       level_name = list(filter(lambda x: x["author"]["username"] == username, get_comments(856420361)))[0]["content"]
     except:
-      return "No comment"
+      return "You haven't made a comment"
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
