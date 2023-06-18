@@ -40,7 +40,7 @@ def _update(self):
                 if "on_disconnect" in self._events:
                     self._events["on_disconnect"]()
                     
-WsCloudEvents._update = _update
+# WsCloudEvents._update = _update
 
 class UnknownUserError(Exception):
   pass
@@ -313,7 +313,7 @@ client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
 twclient.run(thread=True)
 twclienttest.run(thread=True)
-time.sleep(100)
+time.sleep(1800)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
