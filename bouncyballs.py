@@ -17,31 +17,6 @@ class loggingmethod:
 
 CloudRequests.call_event = loggingmethod(CloudRequests.call_event)
 
-def _update(self):
-    while True:
-        try:
-            data = self.connection.websocket.recv().split('\n')
-            result = []
-            for i in data:
-                try:
-                    result.append(json.loads(i))
-                except Exception:
-                    pass
-            for activity in result:
-                if "on_"+activity["method"] in self._events:
-                    if activity["method"] == "set" and activity["name"][2:] == "TO_HOST":
-                        print(activity["value"])
-                    self._events["on_"+activity["method"]](self.Event(user=None, var=activity["name"][2:], name=activity["name"][2:], value=activity["value"], timestamp=time.time()*10000))
-        except Exception:
-            try:
-                self.connection._connect(cloud_host=self.connection.cloud_host)
-                self.connection._handshake()
-            except Exception:
-                if "on_disconnect" in self._events:
-                    self._events["on_disconnect"]()
-                    
-# WsCloudEvents._update = _update
-
 class UnknownUserError(Exception):
   pass
 
@@ -81,22 +56,6 @@ conntest = session.connect_cloud(856420361)
 twconntest = TwCloudConnection(project_id=856420361, username="player1000")
 conn = session.connect_cloud(854229895)
 twconn = TwCloudConnection(project_id=854229895, username="player1000")
-
-"""
-_last_timestamp = 0
-
-def last_timestamp(self):
-  global _last_timestamp
-  return _last_timestamp
-def set_last_timestamp(self, timestamp):
-  global _last_timestamp
-  _last_timestamp = timestamp
-  #print(f"self.ws_data is {getattr(self, 'ws_data', 'not existing')}")
-  #print(f"Set timestamp to {timestamp}")
-
-CloudRequests.last_timestamp = property(last_timestamp)
-CloudRequests.last_timestamp = CloudRequests.last_timestamp.setter(set_last_timestamp)
-"""
 
 client = CloudRequests(conn, used_cloud_vars=["1", "2", "3"])
 twclient = TwCloudRequests(twconn, used_cloud_vars=["1", "2", "3"])
@@ -237,9 +196,8 @@ def load_levels():
 
 @clienttest.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
-  raise Exception
   if time.time() - get_real_timestamp(True) / 1000 > 20:
-    raise Exception
+    return
   level_content = "&".join(level_content)
   username = clienttest.get_requester()
   try:
