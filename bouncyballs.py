@@ -16,7 +16,7 @@ class loggingmethod:
         return run
 
 CloudRequests.call_event = loggingmethod(CloudRequests.call_event)
-"""
+
 def _update(self):
     while True:
         try:
@@ -29,24 +29,18 @@ def _update(self):
                     pass
             for activity in result:
                 if "on_"+activity["method"] in self._events:
+                    if activity["method"] == "set" and activity["name"][2:] == "TO_HOST":
+                        print(activity["value"])
                     self._events["on_"+activity["method"]](self.Event(user=None, var=activity["name"][2:], name=activity["name"][2:], value=activity["value"], timestamp=time.time()*10000))
         except Exception:
             try:
-                while True: 
-                    self.connection._connect(cloud_host=self.connection.cloud_host)
-                    self.connection._handshake()
-                    try:
-                        data = self.connection.websocket.recv().split('\n')
-                        break
-                    except Exception as e:
-                        print(f"problem 1: {e}")
-            except Exception as e:
-                print(f"problem 2: {e}")
+                self.connection._connect(cloud_host=self.connection.cloud_host)
+                self.connection._handshake()
+            except Exception:
                 if "on_disconnect" in self._events:
                     self._events["on_disconnect"]()
                     
 WsCloudEvents._update = _update
-"""
 
 class UnknownUserError(Exception):
   pass
@@ -319,7 +313,7 @@ client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
 twclient.run(thread=True)
 twclienttest.run(thread=True)
-time.sleep(1800)
+time.sleep(100)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
