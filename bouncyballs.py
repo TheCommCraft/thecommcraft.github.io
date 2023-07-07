@@ -184,14 +184,14 @@ def load_levels():
     return
   found_levels = find_levels()
   return_levels = []
-  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
   return return_levels
 
 @twclient.request(name="loadlevels")
 def load_levels():
   found_levels = find_levels()
   return_levels = []
-  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
   return return_levels
 
 @client.request(name="like_level")
@@ -291,14 +291,14 @@ def load_levels():
     return
   found_levels = find_levels()
   return_levels = []
-  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
   return return_levels
 
 @twclienttest.request(name="loadlevels")
 def load_levels():
   found_levels = find_levels()
   return_levels = []
-  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
+  [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
   return return_levels
                   
 client.run(thread=True)
