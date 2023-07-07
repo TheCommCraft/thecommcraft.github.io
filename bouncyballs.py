@@ -104,7 +104,7 @@ def find_ran_levels(amount=20):
 
 def find_pop_levels():
   return_levels = find_ran_levels(100)
-  return_levels = list(sorted(return_levels, key = lambda x: x.get("views", 0), reverse=True))[:20]
+  return_levels = list(sorted(return_levels, key = lambda x: x.get("views", 0) + 8 * len(x.get("likes", ())), reverse=True))[:20]
   return return_levels
 
 def find_levels():
@@ -194,6 +194,40 @@ def load_levels():
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), "", "", "")) for i in found_levels]
   return return_levels
 
+@client.request(name="like_level")
+def like_level(level):
+    level = find_level(level)
+    likes = level.get("likes", [])
+    if not (username := client.get_requester()) in likes:
+        likes.append(username)
+        return "OK"
+    return "NO"
+    
+@twclient.request(name="like_level")
+def like_level(level):
+    level = find_level(level)
+    likes = level.get("likes", [])
+    likes.append("tw")
+    return "OK"
+
+@client.request(name="unlike_level")
+def unlike_level(level):
+    level = find_level(level)
+    likes = level.get("likes", [])
+    if (username := client.get_requester()) in likes:
+        likes.remove(username)
+        return "OK"
+    return "NO"
+    
+@twclient.request(name="unlike_level")
+def unlike_level(level):
+    level = find_level(level)
+    likes = level.get("likes", [])
+    if "tw" in likes:
+        likes.remove("tw")
+        return "OK"
+    return "NO"
+    
 @clienttest.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
   if time.time() - get_real_timestamp(True) / 1000 > 20:
