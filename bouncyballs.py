@@ -124,8 +124,6 @@ def on_unknown_request(request):
 
 @client.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
-  if time.time() - get_real_timestamp() / 1000 > 20:
-    return
   level_content = "&".join(level_content)
   username = client.get_requester()
   try:
@@ -161,8 +159,6 @@ def save_level(level_id, level_name, *level_content):
 
 @client.request(name="loadlevel")
 def load_level(level_id):
-  if time.time() - get_real_timestamp() / 1000 > 20:
-    return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
@@ -181,8 +177,6 @@ def load_level(level_id):
 
 @client.request(name="loadlevels")
 def load_levels():
-  if time.time() - get_real_timestamp() / 1000 > 20:
-    return
   found_levels = find_levels()
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
@@ -235,8 +229,6 @@ def unlike_level(level):
     
 @clienttest.request(name="savelevel")
 def save_level(level_id, level_name, *level_content):
-  if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
   level_content = "&".join(level_content)
   username = clienttest.get_requester()
   try:
@@ -272,8 +264,6 @@ def save_level(level_id, level_name, *level_content):
 
 @clienttest.request(name="loadlevel")
 def load_level(level_id):
-  if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
   print(f"Finding level {level_id}...")
   level = find_level(level_id)
   level_content = level["content"]
@@ -292,8 +282,6 @@ def load_level(level_id):
 
 @clienttest.request(name="loadlevels")
 def load_levels():
-  if time.time() - get_real_timestamp(True) / 1000 > 20:
-    return
   found_levels = find_levels()
   return_levels = []
   [return_levels.extend((i.get("level_id", "0"), i.get("name", "levelName"), i.get("creator", "aHacker"), str(i.get("views", "0")), str(len(i.get("likes", ()))), "", "")) for i in found_levels]
