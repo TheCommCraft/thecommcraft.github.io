@@ -113,11 +113,13 @@ def find_levels():
 def get_comments(pid=854229895):
   return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json()
 
-@clienttest.event
+
+
+@client.event
 def on_request(request):
   print(f"Received request {request.__dict__}")
 
-@clienttest.event
+@client.event
 def on_unknown_request(request):
   print(f"Received urequest {request.__dict__}")
 
@@ -305,7 +307,7 @@ client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
 twclient.run(thread=True)
 twclienttest.run(thread=True)
-time.sleep(1800)
+time.sleep(50)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
