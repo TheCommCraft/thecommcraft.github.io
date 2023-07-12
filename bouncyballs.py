@@ -114,7 +114,6 @@ def get_comments(pid=854229895):
   return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json()
 
 
-
 @client.event
 def on_request(request):
   print(f"Received request {request.__dict__}")
@@ -202,6 +201,7 @@ def like_level(level):
     likes = level.get("likes", [])
     if not (username := client.get_requester()) in likes:
         likes.append(username)
+        update_level(level.get("level_id"), {"likes": likes})
         return "OK"
     return "NO"
     
@@ -210,6 +210,7 @@ def like_level(level):
     level = find_level(level)
     likes = level.get("likes", [])
     likes.append("tw")
+    update_level(level.get("level_id"), {"likes": likes})
     return "OK"
 
 @client.request(name="unlike_level")
@@ -219,6 +220,7 @@ def unlike_level(level):
     if (username := client.get_requester()) in likes:
         likes.remove(username)
         return "OK"
+        update_level(level.get("level_id"), {"likes": likes})
     return "NO"
     
 @twclient.request(name="unlike_level")
@@ -228,6 +230,7 @@ def unlike_level(level):
     if "tw" in likes:
         likes.remove("tw")
         return "OK"
+        update_level(level.get("level_id"), {"likes": likes})
     return "NO"
     
 @clienttest.request(name="savelevel")
