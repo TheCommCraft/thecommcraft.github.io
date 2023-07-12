@@ -220,8 +220,8 @@ def unlike_level(level):
     likes = level.get("likes", [])
     if (username := client.get_requester()) in likes:
         likes.remove(username)
-        return "OK"
         update_level(level.get("level_id"), {"likes": likes})
+        return "OK"
     return "NO"
     
 @twclient.request(name="unlike_level")
@@ -230,8 +230,8 @@ def unlike_level(level):
     likes = level.get("likes", [])
     if "tw" in likes:
         likes.remove("tw")
-        return "OK"
         update_level(level.get("level_id"), {"likes": likes})
+        return "OK"
     return "NO"
     
 @clienttest.request(name="savelevel")
