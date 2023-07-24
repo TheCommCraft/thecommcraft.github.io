@@ -3,7 +3,7 @@ from pymongo.server_api import ServerApi
 from threading import Thread
 import os, time, random, requests, signal
 from scratchattach import Session, CloudRequests, TwCloudRequests, CloudEvents, WsCloudEvents, get_cloud_logs, TwCloudConnection
-
+from html import unescape
 
 class loggingmethod:
     def __init__(self, func):
@@ -119,9 +119,9 @@ def find_levels():
 
 def get_comments(pid=854229895):
   if pid == 854229895:
-      return requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json()
+      return unescape(requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
   else:
-      return requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json()
+      return unescape(requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
 
 
 @client.event
