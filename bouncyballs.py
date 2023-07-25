@@ -119,9 +119,9 @@ def find_levels():
 
 def get_comments(pid=854229895):
   if pid == 854229895:
-      return unescape(requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
+      return (requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
   else:
-      return unescape(requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
+      return (requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
 
 
 @client.event
@@ -148,7 +148,7 @@ def save_level(level_id, level_name, *level_content):
     return "You are not permitted to edit this"
   if level_name == "comments":
     try:
-      level_name = list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"]
+      level_name = unescape(list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"])
     except:
       return "You haven't made a comment"
   newvalues = {"content": level_content, "name": level_name, "creator": username}
