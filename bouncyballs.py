@@ -119,7 +119,9 @@ def find_levels():
 
 def get_comments(pid=854229895):
   if pid == 854229895:
-      return (requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
+      comments = (requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
+      print(comments)
+      return comments
   else:
       return (requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
 
@@ -140,17 +142,17 @@ def save_level(level_id, level_name, *level_content):
     user = find_user(username)
   except UnknownUserError:
     user = create_user(username)
+  if level_name == "comments":
+    try:
+      level_name = unescape(list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"])
+    except:
+      return "You haven't made a comment"
   try:
     level = find_level(level_id)
   except UnknownLevelError:
     level = create_level(level_id)
   if level.get("creator", username) != username:
     return "You are not permitted to edit this"
-  if level_name == "comments":
-    try:
-      level_name = unescape(list(filter(lambda x: x["author"]["username"] == username, get_comments()))[0]["content"])
-    except:
-      return "You haven't made a comment"
   newvalues = {"content": level_content, "name": level_name, "creator": username}
   if level_name == "Nothing":
     newvalues.pop("name")
@@ -308,7 +310,7 @@ client.run(thread=True)
 Thread(target=clienttest.run, kwargs={"thread":False, "no_packet_loss":True}).start()
 twclient.run(thread=True)
 twclienttest.run(thread=True)
-time.sleep(1800)
+time.sleep(180)
 print("Done")
 pgid = os.getpgid(os.getpid())
 os.killpg(pgid, signal.SIGINT)
