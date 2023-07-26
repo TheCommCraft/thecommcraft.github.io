@@ -119,11 +119,10 @@ def find_levels():
 
 def get_comments(pid=854229895):
   if pid == 854229895:
-      comments = (requests.get("https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
-      print(comments)
+      comments = (requests.get(f"https://api.scratch.mit.edu/users/-teamsphere-/projects/{pid}/comments").json())
       return comments
   else:
-      return (requests.get("https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
+      return (requests.get(f"https://api.scratch.mit.edu/users/TheseCommCraft/projects/{pid}/comments").json())
 
 
 @client.event
