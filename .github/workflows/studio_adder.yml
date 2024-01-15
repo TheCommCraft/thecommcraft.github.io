@@ -26,6 +26,6 @@ jobs:
         pip install -r requirements.txt
         npm install
     - name: Run Python script
-      run: python script.py
+      run: python studioadder.py
       env:
         UNRELATED_PASSWORD: ${{ secrets.UNRELATED_PASSWORD }}
