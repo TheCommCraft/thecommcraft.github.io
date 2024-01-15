@@ -1,6 +1,6 @@
 import scratchattach
 from requests import get
-import time, os
+import time, os, traceback
 
 api = "https://api.scratch.mit.edu"
 session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
@@ -18,7 +18,8 @@ def search(term=None):
 def connect_all(term=None):
     for studio in search(term):
         try:
-            yield session.connect_studio(studio)
+            studio = session.connect_studio(studio)
+            yield studio
         except:
             print(f"Failed to connect to {studio}")
 
@@ -29,10 +30,12 @@ def add_all(term=None, *, projects=None):
             try:
                 project = project.id
                 studio.remove_project(project)
+                time.sleep(0.1)
                 studio.add_project(project)
             except:
                 print(f"Failed to access {studio.id if studio else None}")
-            time.sleep(0.2)
+                traceback.print_exc()
+            time.sleep(0.1)
 
 add_all("add anything")
 add_all("games")
