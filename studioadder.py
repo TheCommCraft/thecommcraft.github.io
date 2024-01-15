@@ -27,10 +27,11 @@ def add_all(term=None, *, projects=None):
     for studio in connect_all(term):
         for project in projects:
             try:
+                project = project.id
                 studio.remove_project(project)
                 studio.add_project(project)
             except:
-                print(f"Failed to access {studio.id}")
+                print(f"Failed to access {studio.id if studio else None}")
             time.sleep(0.2)
 
 add_all("add anything")
