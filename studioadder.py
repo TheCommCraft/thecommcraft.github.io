@@ -20,14 +20,17 @@ def connect_all(term=None):
         try:
             yield session.connect_studio(studio)
         except:
-          print(f"Failed to connect to {studio}")
+            print(f"Failed to connect to {studio}")
 
 def add_all(term=None, *, projects=None):
     projects = projects or add_projects
     for studio in connect_all(term):
         for project in projects:
-            studio.remove_project(project)
-            studio.add_project(project)
+            try:
+                studio.remove_project(project)
+                studio.add_project(project)
+            except:
+                print(f"Failed to access {studio.id}")
             time.sleep(0.2)
 
 add_all("add anything")
