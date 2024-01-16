@@ -1,6 +1,6 @@
 import scratchattach
 from requests import get
-import time, os, traceback
+import time, os, traceback, random
 
 api = "https://api.scratch.mit.edu"
 session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
@@ -26,6 +26,8 @@ def connect_all(term=None):
 
 def add_all(term=None, *, projects=None):
     projects = projects or add_projects
+    if len(projects) > 5:
+        projects = random.sample(projects, 5)
     for studio in connect_all(term):
         for project in projects:
             try:
