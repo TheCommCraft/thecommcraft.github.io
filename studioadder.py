@@ -37,6 +37,10 @@ def add_all(term=None, *, projects=None):
                 traceback.print_exc()
             time.sleep(0.1)
 
-add_all("add anything")
+add_all("anything")
 add_all("games")
 add_all("cool games")
+add_all("all projects")
+add_all("everything")
+add_all("best games")
+add_all("good games")
