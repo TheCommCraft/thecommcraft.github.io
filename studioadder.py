@@ -5,7 +5,8 @@ import time, os, traceback
 api = "https://api.scratch.mit.edu"
 session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
 user = session.get_linked_user()
-add_projects = user.projects()
+game_s = session.connect_studio(32910287)
+add_projects = user.projects() + game_s.projects()
 
 def search(term=None):
     url = f"{api}/search/studios?q={term}" if term else f"{api}/search/studios"
@@ -29,6 +30,8 @@ def add_all(term=None, *, projects=None):
         for project in projects:
             try:
                 project = project.id
+            except: pass
+            try:
                 studio.remove_project(project)
                 time.sleep(0.1)
                 studio.add_project(project)
