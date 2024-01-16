@@ -27,6 +27,8 @@ def connect_all(term=None):
 def add_all(term=None, *, projects=None):
     projects = projects or add_projects
     for studio in connect_all(term):
+        if not studio:
+            continue
         for project in random.sample(projects, 5) if len(projects) > 5 else projects:
             try:
                 project = project.id
