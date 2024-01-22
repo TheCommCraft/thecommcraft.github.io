@@ -30,7 +30,7 @@ def add_all(term=None, *, projects=None):
     for studio in connect_all(term):
         if not studio:
             continue
-        for project in random.sample(projects, 15) if len(projects) > 15 else projects:
+        for project in random.sample(projects, 5) if len(projects) > 5 else projects:
             try:
                 project = project.id
             except: pass
