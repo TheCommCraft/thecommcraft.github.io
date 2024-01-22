@@ -36,9 +36,9 @@ def add_all(term=None, *, projects=None):
             except: pass
             try:
                 studio.remove_project(project)
-                time.sleep(0.2)
+                time.sleep(0.5)
                 studio.add_project(project)
-                time.sleep(0.2)
+                time.sleep(0.5)
             except:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
