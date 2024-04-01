@@ -38,12 +38,13 @@ def add_all(term=None, *, projects=None):
             except: pass
             try:
                 studio.remove_project(project)
-                time.sleep(0.7)
+                time.sleep(1)
                 studio.add_project(project)
-                time.sleep(0.7)
+                time.sleep(2)
             except:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
+                
 
 add_all("anything")
 add_all("games")
