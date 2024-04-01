@@ -30,17 +30,17 @@ def add_all(term=None, *, projects=None):
     for studio in connect_all(term):
         if not studio:
             continue
-        if "undertale" in studio.description.lower():
+        if "undertale" in studio.description.lower() or "minecraft" in studio.description.lower():
             continue
-        for project in random.sample(projects, 5) if len(projects) > 5 else projects:
+        for project in random.sample(projects, 3) if len(projects) > 3 else projects:
             try:
                 project = project.id
             except: pass
             try:
                 studio.remove_project(project)
-                time.sleep(0.5)
+                time.sleep(0.7)
                 studio.add_project(project)
-                time.sleep(0.5)
+                time.sleep(0.7)
             except:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
@@ -52,3 +52,7 @@ add_all("all projects")
 add_all("everything")
 add_all("best games")
 add_all("good games")
+add_all("whatever")
+add_all("get this to")
+add_all("10000 projects")
+add_all("100000 projects")
