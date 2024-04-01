@@ -1,6 +1,6 @@
 import scratchattach
 from requests import get
-import time, os, traceback, random
+import time, os, traceback, random, json
 
 api = "https://api.scratch.mit.edu"
 session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
@@ -41,7 +41,9 @@ def add_all(term=None, *, projects=None):
                 time.sleep(1)
                 studio.add_project(project)
                 time.sleep(2)
-            except:
+            except json.decoder.JSONDecoderError:
+                pass
+            except Exception:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
                 
