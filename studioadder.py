@@ -43,6 +43,7 @@ def add_all(term=None, *, projects=None):
                 time.sleep(2)
             except json.decoder.JSONDecodeError:
                 print(f"Ratelimited at {studio.id}")
+                exit()
             except Exception:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
