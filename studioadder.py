@@ -2,16 +2,24 @@ import scratchattach
 from requests import get
 import time, os, traceback, random, json
 
-api = "https://api.scratch.mit.edu"
-session_id = os.getenv("TCC_SESSION_ID")
-x_token = os.getenv("TCC_X_TOKEN")
-session = scratchattach.Session(session_id=session_id, username="TheCommCraft")
-session.xtoken = x_token
-session._headers["X-Token"] = x_token
-user = session.get_linked_user()
-game_s = session.connect_studio(32910287)
-add_projects = [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
-random.shuffle(add_projects)
+if random.random() <= 0.5:
+    api = "https://api.scratch.mit.edu"
+    session_id = os.getenv("TCC_SESSION_ID")
+    x_token = os.getenv("TCC_X_TOKEN")
+    session = scratchattach.Session(session_id=session_id, username="TheCommCraft")
+    session.xtoken = x_token
+    session._headers["X-Token"] = x_token
+    user = session.get_linked_user()
+    game_s = session.connect_studio(32910287)
+    add_projects = [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
+    random.shuffle(add_projects)
+else:
+    api = "https://api.scratch.mit.edu"
+    session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
+    user = session.get_linked_user()
+    game_s = session.connect_studio(32910287)
+    add_projects = user.projects() #+ [i["id"] for i in game_s.projects()]
+    random.shuffle(add_projects)
 
 def search(term=None):
     url = f"{api}/search/studios?q={term}" if term else f"{api}/search/studios"
