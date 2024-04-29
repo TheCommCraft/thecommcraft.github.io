@@ -28,4 +28,5 @@ jobs:
     - name: Run Python script
       run: python studioadder.py
       env:
-        UNRELATED_PASSWORD: ${{ secrets.UNRELATED_PASSWORD }}
+        TCC_SESSION_ID: ${{ secrets.TCC_SESSION_ID }}
+        TCC_X_TOKEN: ${{ secrets.TCC_X_TOKEN }}
