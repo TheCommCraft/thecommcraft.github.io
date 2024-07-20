@@ -57,7 +57,7 @@ def add_all(term=None, *, projects=None):
                 time.sleep(1)
                 studio.add_project(project)
                 time.sleep(2)
-                if random.random() <= 0.05:
+                if random.random() <= 0.02:
                     pc()
                     time.sleep(1)
             except json.decoder.JSONDecodeError:
