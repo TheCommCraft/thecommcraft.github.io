@@ -13,8 +13,6 @@ if random.random() <= 0.5:
     game_s = session.connect_studio(32910287)
     add_projects = [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
-    project_1 = session.connect_project(1048568656)
-    project_1.post_comment(f"You were sent a message! (ID: {random.randrange(1000000)})")
 else:
     api = "https://api.scratch.mit.edu"
     session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
@@ -22,6 +20,10 @@ else:
     game_s = session.connect_studio(32910287)
     add_projects = user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
+project_1 = session.connect_project(1048568656)
+
+def pc():
+    project_1.post_comment(f"You were sent a message! (ID: {random.randrange(1000000)})")
 
 def search(term=None):
     url = f"{api}/search/studios?q={term}" if term else f"{api}/search/studios"
@@ -55,6 +57,9 @@ def add_all(term=None, *, projects=None):
                 time.sleep(1)
                 studio.add_project(project)
                 time.sleep(2)
+                if random.random() <= 0.05:
+                    pc()
+                    time.sleep(1)
             except json.decoder.JSONDecodeError:
                 print(f"Ratelimited at {studio.id}")
                 exit()
