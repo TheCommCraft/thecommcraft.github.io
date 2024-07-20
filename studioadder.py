@@ -13,6 +13,7 @@ if random.random() <= 0.5:
     game_s = session.connect_studio(32910287)
     add_projects = [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
+    print("Starting as TCC")
 else:
     api = "https://api.scratch.mit.edu"
     session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
@@ -20,6 +21,7 @@ else:
     game_s = session.connect_studio(32910287)
     add_projects = user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
+    print("Starting as ur")
 project_1 = session.connect_project(1048568656)
 
 def pc():
