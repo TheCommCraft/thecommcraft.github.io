@@ -36,7 +36,7 @@ def search(term=None, limit=None):
             continue
         yield studio["id"]
         
-def connect_all(term=Nonem, limit=None):
+def connect_all(term=None, limit=None):
     for studio in search(term, limit=limit):
         try:
             studio = session.connect_studio(studio)
