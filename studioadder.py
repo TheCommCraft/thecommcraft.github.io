@@ -11,7 +11,7 @@ if random.random() <= 1.0:
     session._headers["X-Token"] = x_token
     user = session.get_linked_user()
     game_s = session.connect_studio(32910287)
-    add_projects = [session.connect_project(1047118561)]#[i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
+    add_projects = [session.connect_project(1047118561)] if random.random() < 0.95 else [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
     print("Starting as TCC")
 else:
