@@ -27,25 +27,26 @@ project_1 = session.connect_project(1048568656)
 def pc():
     project_1.post_comment(f"You were sent a message! (ID: {random.randrange(1000000)})")
 
-def search(term=None):
+def search(term=None, limit=None):
     url = f"{api}/search/studios?q={term}" if term else f"{api}/search/studios"
     res = get(url).json()
-    for studio in res:
+    limit = limit or 1000
+    for studio in res[:limit]:
         if not studio["open_to_all"]:
             continue
         yield studio["id"]
         
-def connect_all(term=None):
-    for studio in search(term):
+def connect_all(term=Nonem, limit=None):
+    for studio in search(term, limit=limit):
         try:
             studio = session.connect_studio(studio)
             yield studio
         except:
             print(f"Failed to connect to {studio}")
 
-def add_all(term=None, *, projects=None):
+def add_all(term=None, *, projects=None, limit=None):
     projects = projects or add_projects
-    for studio in connect_all(term):
+    for studio in connect_all(term, limit=limit):
         if not studio:
             continue
         if "undertale" in studio.description.lower() or "minecraft" in studio.description.lower():
@@ -68,16 +69,18 @@ def add_all(term=None, *, projects=None):
             except Exception:
                 print(f"Failed to access {studio.id if studio else None}")
                 traceback.print_exc()
-                
 
+add_all("non popular projects")
+add_all("scratch kat projects", limit=1)
+add_all("The Mario and Luigi Gallery", limit=1)
 add_all("anything")
 add_all("games")
 add_all("cool games")
 add_all("all projects")
+add_all("get this to")
+add_all("10000 projects")
+add_all("100000 projects")
 add_all("everything")
 add_all("best games")
 add_all("good games")
 add_all("whatever")
-add_all("get this to")
-add_all("10000 projects")
-add_all("100000 projects")
