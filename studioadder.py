@@ -2,7 +2,7 @@ import scratchattach
 from requests import get, post
 import time, os, traceback, random, json
 
-if random.random() <= 1.0:
+if random.random() <= 0.4:
     api = "https://api.scratch.mit.edu"
     session_id = os.getenv("TCC_SESSION_ID")
     x_token = os.getenv("TCC_X_TOKEN")
@@ -11,7 +11,7 @@ if random.random() <= 1.0:
     session._headers["X-Token"] = x_token
     user = session.get_linked_user()
     game_s = session.connect_studio(32910287)
-    add_projects = [session.connect_project(1047118561)] if random.random() < 0.95 else [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
+    add_projects = [session.connect_project(1047118561)] if random.random() < 0.9 else [i["id"] for i in game_s.projects()] # user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
     print("Starting as TCC")
 else:
@@ -19,7 +19,7 @@ else:
     session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
     user = session.get_linked_user()
     game_s = session.connect_studio(32910287)
-    add_projects = user.projects() #+ [i["id"] for i in game_s.projects()]
+    add_projects = [session.connect_project(1050606943)] if random.random() < 0.9 else user.projects() #+ [i["id"] for i in game_s.projects()]
     random.shuffle(add_projects)
     print("Starting as ur")
 project_1 = session.connect_project(1048568656)
