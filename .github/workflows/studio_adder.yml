@@ -30,4 +30,6 @@ jobs:
       env:
         UNRELATED_PASSWORD: ${{ secrets.UNRELATED_PASSWORD }}
         TCC_SESSION_ID: ${{ secrets.TCC_SESSION_ID }}
-        TCC_X_TOKEN: ${{ secrets.TCC_X_TOKEN }}
+        TCC_X_TOKEN: ${{ secrets.TCC_X_TOKEN }}}}
+        UR_SESSION_ID: ${{ secrets.UR_SESSION_ID }}
+        UR_X_TOKEN: ${{ secrets.UR_X_TOKEN }}
