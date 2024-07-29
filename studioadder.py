@@ -2,7 +2,7 @@ import scratchattach
 from requests import get, post
 import time, os, traceback, random, json
 
-if random.random() <= 0.3:
+if random.random() <= 1.0:
     api = "https://api.scratch.mit.edu"
     session_id = os.getenv("TCC_SESSION_ID")
     x_token = os.getenv("TCC_X_TOKEN")
