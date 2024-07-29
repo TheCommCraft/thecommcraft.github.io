@@ -2,7 +2,7 @@ import scratchattach
 from requests import get, post
 import time, os, traceback, random, json
 
-if random.random() <= 0.4:
+if random.random() <= 0.3:
     api = "https://api.scratch.mit.edu"
     session_id = os.getenv("TCC_SESSION_ID")
     x_token = os.getenv("TCC_X_TOKEN")
@@ -16,7 +16,11 @@ if random.random() <= 0.4:
     print("Starting as TCC")
 else:
     api = "https://api.scratch.mit.edu"
-    session = scratchattach.login("-unrelated-", os.getenv("UNRELATED_PASSWORD"))
+    session_id = os.getenv("UR_SESSION_ID")
+    x_token = os.getenv("UR_X_TOKEN")
+    session = scratchattach.Session(session_id=session_id, username="-unrelated-")
+    session.xtoken = x_token
+    session._headers["X-Token"] = x_token
     user = session.get_linked_user()
     game_s = session.connect_studio(32910287)
     add_projects = [session.connect_project(1050606943)] if random.random() < 0.9 else user.projects() #+ [i["id"] for i in game_s.projects()]
