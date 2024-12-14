@@ -55,7 +55,7 @@ function makeCross(pos) {
   const crossSprite = new Sprite(crossAsset);
   app.stage.addChild(crossSprite)
   crossSprite.position = pos;
-  crossSprite.countdown = 60;
+  crossSprite.countdown = 120;
   crossSprite.anchor.set(0.5);
   return crossSprite;
 }
@@ -102,7 +102,7 @@ function makeCross(pos) {
     app.stage.addChild(player);
     app.stage.addChild(shield);
 
-    let countdown = 30.0;
+    let countdown = 60.0;
     window.crosses = [];
 
     let mousePos = new Point(app.screen.width / 2, app.screen.width / 2);
@@ -118,7 +118,7 @@ function makeCross(pos) {
         // * Creates frame-independent transformation *
         countdown -= time.deltaTime;
         if (countdown <= 0) {
-          countdown = Math.random() * 30;
+          countdown = Math.random() * 60;
           crosses.push(makeCross(new Point(crossAsset.width / 2 + Math.random() * (app.screen.width - crossAsset.width), crossAsset.height / 2 + Math.random() * (app.screen.height - crossAsset.height))));
         }
         player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
@@ -130,13 +130,13 @@ function makeCross(pos) {
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
         for (const cross of crosses.values()) {
           cross.countdown -= time.deltaTime;
-          if (cross.countdown > 30) {
+          if (cross.countdown > 60) {
             cross.visible = !((cross.countdown / 5) % 2);
           }
-          else if (cross.countdown > 15) {
+          else if (cross.countdown > 30) {
             cross.visible = !((cross.countdown / 3) % 2);
           }
-          else if (cross.countdown > 5) {
+          else if (cross.countdown > 10) {
             cross.visible = !((cross.countdown / 2) % 2);
           }
           else if (cross.countdown >= 0) {
