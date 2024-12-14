@@ -75,7 +75,7 @@ function makeCross(pos) {
     const texture = await Assets.load('shield.png');
     const background = await Assets.load('dodgebackground.png');
     const box = await Assets.load('hitbox.png');
-    const crossAsset = await Assets.load('cross.png');
+    window.crossAsset = await Assets.load('cross.png');
 
     // Create a player Sprite
     const player = new Sprite(box);
