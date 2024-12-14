@@ -127,7 +127,7 @@ function makeCross(pos) {
         shield.position = mousePos;
         shield.x = anchor(shield.x, player.x - player.width / 2 + shield.width / 2 + 4, player.x + player.width / 2 - shield.width / 2 - 4);
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
-        for (cross of crosses.values()) {
+        for (const cross of crosses.values()) {
           if (cross.countdown > 30) {
             cross.visible = !((cross.countdown / 5) % 2);
           }
