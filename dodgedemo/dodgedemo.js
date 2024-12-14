@@ -51,6 +51,14 @@ function anchor(x, a, b) {
   return Math.max(Math.min(x, b), a);
 }
 
+function makeCross(pos) {
+  const crossSprite = new Sprite(crossAsset);
+  app.stage.addChild(crossSprite)
+  crossSprite.position = pos;
+  crossSprite.countdown = 60;
+  return crossSprite;
+}
+
 (async () =>
 {
     // Create a new application
@@ -66,6 +74,7 @@ function anchor(x, a, b) {
     const texture = await Assets.load('shield.png');
     const background = await Assets.load('dodgebackground.png');
     const box = await Assets.load('hitbox.png');
+    const crossAsset = await Assets.load('cross.png');
 
     // Create a player Sprite
     const player = new Sprite(box);
@@ -73,6 +82,7 @@ function anchor(x, a, b) {
     const bg = new Sprite(background);
 
     const wasd = [keyboard("w"), keyboard("a"), keyboard("s"), keyboard("d")];
+
 
     // Center the sprite's anchor point
     bg.anchor.set(0.5);
@@ -91,6 +101,9 @@ function anchor(x, a, b) {
     app.stage.addChild(player);
     app.stage.addChild(shield);
 
+    let countdown = 30.0;
+    const crosses = [];
+
     let mousePos = new Point(app.screen.width / 2, app.screen.width / 2);
     app.stage.eventMode = 'static';
     app.stage.hitArea = app.screen;
@@ -102,6 +115,11 @@ function anchor(x, a, b) {
         // Just for fun, let's rotate mr rabbit a little.
         // * Delta is 1 if running at 100% performance *
         // * Creates frame-independent transformation *
+        countdown -= time.deltaTime;
+        if (countdown <= 0) {
+          countdown = Math.random() * 30;
+          crosses.push(makeCross);
+        }
         player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
         player.y += time.deltaTime * 4.0 * (wasd[2].isDown - wasd[0].isDown);
         player.x = anchor(player.x, player.width / 2 + 12, app.screen.width - player.width / 2 - 12);
@@ -109,5 +127,23 @@ function anchor(x, a, b) {
         shield.position = mousePos;
         shield.x = anchor(shield.x, player.x - player.width / 2 + shield.width / 2 + 4, player.x + player.width / 2 - shield.width / 2 - 4);
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
+        for (cross of crosses.values()) {
+          if (cross.countdown > 30) {
+            cross.visible = !((cross.countdown / 5) % 2);
+          }
+          else if (cross.countdown > 15) {
+            cross.visible = !((cross.countdown / 3) % 2);
+          }
+          else if (cross.countdown > 5) {
+            cross.visible = !((cross.countdown / 2) % 2);
+          }
+          else if (cross.countdown >= 0) {
+            cross.visible = !(cross.countdown % 2);
+          }
+          else {
+            cross.destroy();
+            crosses.splice(crosses.indexOf(cross), 1)
+          }
+        }
     });
 })();
