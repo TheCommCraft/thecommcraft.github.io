@@ -60,7 +60,7 @@ function anchor(x, a, b) {
     await app.init({ background: '#fff', width: 128*4, height: 128*4 });
 
     // Append the application canvas to the document body
-    document.body.appendChild(app.canvas);
+    document.getElementById("demo").appendChild(app.canvas);
 
     // Load the player texture
     const texture = await Assets.load('shield.png');
