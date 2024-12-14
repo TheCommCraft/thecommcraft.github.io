@@ -119,7 +119,7 @@ function makeCross(pos) {
         countdown -= time.deltaTime;
         if (countdown <= 0) {
           countdown = Math.random() * 30;
-          crosses.push(makeCross(new Point(cross.width / 2 + Math.random() * (app.screen.width - cross.width), cross.height / 2 + Math.random() * (app.screen.height - cross.height))));
+          crosses.push(makeCross(new Point(crossAsset.width / 2 + Math.random() * (app.screen.width - crossAsset.width), crossAsset.height / 2 + Math.random() * (app.screen.height - crossAsset.height))));
         }
         player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
         player.y += time.deltaTime * 4.0 * (wasd[2].isDown - wasd[0].isDown);
