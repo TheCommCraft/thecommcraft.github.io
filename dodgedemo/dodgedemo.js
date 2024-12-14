@@ -92,6 +92,8 @@ function anchor(x, a, b) {
     app.stage.addChild(shield);
 
     let mousePos = new Point(app.screen.width / 2, app.screen.width / 2);
+    app.stage.eventMode = 'static';
+    app.stage.hitArea = app.screen;
     app.stage.on("mousemove", (event) => {mousePos = event.global;})
 
     // Listen for animate update
