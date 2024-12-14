@@ -130,10 +130,10 @@ function makeCross(pos) {
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
         for (const cross of crosses.values()) {
           cross.countdown -= time.deltaTime;
-          if (cross.countdown > 60) {
+          if (cross.countdown > 120) {
             cross.visible = !Math.floor((cross.countdown / 10) % 2);
           }
-          else if (cross.countdown > 30) {
+          else if (cross.countdown > 60) {
             cross.visible = !Math.floor((cross.countdown / 5) % 2);
           }
           else if (cross.countdown >= 0) {
