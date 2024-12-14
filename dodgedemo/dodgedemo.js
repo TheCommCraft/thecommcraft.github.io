@@ -56,6 +56,7 @@ function makeCross(pos) {
   app.stage.addChild(crossSprite)
   crossSprite.position = pos;
   crossSprite.countdown = 60;
+  crossSprite.anchor.set(0.5);
   return crossSprite;
 }
 
@@ -87,7 +88,7 @@ function makeCross(pos) {
     // Center the sprite's anchor point
     bg.anchor.set(0.5);
     player.anchor.set(0.5);
-    shield.anchor.set(0.5)
+    shield.anchor.set(0.5);
 
     // Move the sprite to the center of the screen
     player.x = app.screen.width / 2;
@@ -118,7 +119,7 @@ function makeCross(pos) {
         countdown -= time.deltaTime;
         if (countdown <= 0) {
           countdown = Math.random() * 30;
-          crosses.push(makeCross);
+          crosses.push(makeCross(new Point(cross.width / 2 + Math.random() * (app.screen.width - cross.width), cross.height / 2 + Math.random() * (app.screen.height - cross.height))));
         }
         player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
         player.y += time.deltaTime * 4.0 * (wasd[2].isDown - wasd[0].isDown);
