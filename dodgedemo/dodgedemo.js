@@ -102,8 +102,8 @@ function anchor(x, a, b) {
         // Just for fun, let's rotate mr rabbit a little.
         // * Delta is 1 if running at 100% performance *
         // * Creates frame-independent transformation *
-        player.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
-        player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
+        player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
+        player.y += time.deltaTime * 4.0 * (wasd[2].isDown - wasd[0].isDown);
         player.x = anchor(player.x, player.width / 2 + 12, app.screen.width - player.width / 2 - 12);
         player.y = anchor(player.y, player.height / 2 + 12, app.screen.height - player.height / 2 - 12);
         shield.position = mousePos;
