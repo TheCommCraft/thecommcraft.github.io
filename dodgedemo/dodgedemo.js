@@ -91,7 +91,7 @@ function anchor(x, a, b) {
     app.stage.addChild(player);
     app.stage.addChild(shield);
 
-    let mousePos = Point(0, 0);
+    let mousePos = new Point(0, 0);
     app.renderer.view.onmousemove = (event) => {console.log(event);}
 
     // Listen for animate update
