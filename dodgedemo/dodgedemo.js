@@ -1,4 +1,4 @@
-const { Application, Assets, Sprite } = PIXI;
+const { Application, Assets, Sprite, Point } = PIXI;
 
 function keyboard(value) {
   const key = {};
@@ -54,7 +54,7 @@ function anchor(x, a, b) {
 (async () =>
 {
     // Create a new application
-    const app = new Application();
+    window.app = new Application();
 
     // Initialize the application
     await app.init({ background: '#fff', width: 128*4, height: 128*4 });
@@ -91,6 +91,9 @@ function anchor(x, a, b) {
     app.stage.addChild(player);
     app.stage.addChild(shield);
 
+    let mousePos = Point(0, 0);
+    app.renderer.view.onmousemove = (event) => {console.log(event);}
+
     // Listen for animate update
     app.ticker.add((time) =>
     {
@@ -101,7 +104,7 @@ function anchor(x, a, b) {
         player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
         player.x = anchor(player.x, player.width / 2 + 12, app.screen.width - player.width / 2 - 12);
         player.y = anchor(player.y, player.height / 2 + 12, app.screen.height - player.height / 2 - 12);
-        shield.position = app.stage.getMousePosition();
+        shield.position = mousePos;
         shield.x = anchor(shield.x, player.x - player.width / 2 + shield.width / 2 + 4, player.x + player.width / 2 - shield.width / 2 - 4);
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
     });
