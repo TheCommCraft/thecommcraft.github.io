@@ -99,7 +99,7 @@ function anchor(x, a, b) {
         // * Creates frame-independent transformation *
         player.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
         player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
-        player.x = anchor(player.x, player.width / 2 + 8, app.screen.width - player.width / 2 - 8);
-        player.y = anchor(player.y, player.height / 2 + 8, app.screen.height - player.height / 2 - 8);
+        player.x = anchor(player.x, player.width / 2 + 32, app.screen.width - player.width / 2 - 32);
+        player.y = anchor(player.y, player.height / 2 + 32, app.screen.height - player.height / 2 - 32);
     });
 })();
