@@ -141,7 +141,7 @@ function makeCross(pos) {
             cross.visible = !(cross.countdown % 2);
           }
           else {
-            cross.destroy();
+            app.stage.removeChild(cross);
             crosses.splice(crosses.indexOf(cross), 1)
           }
         }
