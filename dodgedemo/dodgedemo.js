@@ -47,6 +47,10 @@ function keyboard(value) {
   return key;
 }
 
+function anchor(x, a, b) {
+  return Math.max(Math.min(x, b), a);
+}
+
 (async () =>
 {
     // Create a new application
@@ -95,5 +99,7 @@ function keyboard(value) {
         // * Creates frame-independent transformation *
         player.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
         player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
+        player.x = anchor(player.x, player.width / 2, app.screen.width - player.width / 2);
+        player.y = anchor(player.y, player.height / 2, app.screen.height - player.height / 2);
     });
 })();
