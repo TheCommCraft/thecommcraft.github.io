@@ -1,4 +1,4 @@
-{ Application, Assets, Sprite } = PIXI;
+const { Application, Assets, Sprite } = PIXI;
 
 function keyboard(value) {
   const key = {};
