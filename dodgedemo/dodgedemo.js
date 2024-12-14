@@ -55,7 +55,7 @@ function makeCross(pos) {
   const crossSprite = new Sprite(crossAsset);
   app.stage.addChild(crossSprite)
   crossSprite.position = pos;
-  crossSprite.countdown = 120;
+  crossSprite.countdown = 180;
   crossSprite.anchor.set(0.5);
   return crossSprite;
 }
@@ -131,13 +131,13 @@ function makeCross(pos) {
         for (const cross of crosses.values()) {
           cross.countdown -= time.deltaTime;
           if (cross.countdown > 60) {
-            cross.visible = !Math.floor((cross.countdown / 20) % 2);
-          }
-          else if (cross.countdown > 30) {
             cross.visible = !Math.floor((cross.countdown / 10) % 2);
           }
-          else if (cross.countdown >= 0) {
+          else if (cross.countdown > 30) {
             cross.visible = !Math.floor((cross.countdown / 5) % 2);
+          }
+          else if (cross.countdown >= 0) {
+            cross.visible = !Math.floor((cross.countdown / 2) % 2);
           }
           else {
             app.stage.removeChild(cross);
