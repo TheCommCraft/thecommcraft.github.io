@@ -78,6 +78,10 @@ function keyboard(value) {
     // Move the sprite to the center of the screen
     player.x = app.screen.width / 2;
     player.y = app.screen.height / 2;
+    bg.x = app.screen.width / 2;
+    bg.y = app.screen.height / 2;
+    shield.x = app.screen.width / 2;
+    shield.y = app.screen.height / 2;
 
     app.stage.addChild(bg);
     app.stage.addChild(player);
@@ -89,7 +93,7 @@ function keyboard(value) {
         // Just for fun, let's rotate mr rabbit a little.
         // * Delta is 1 if running at 100% performance *
         // * Creates frame-independent transformation *
-        player.position.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
-        player.position.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
+        player.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
+        player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
     });
 })();
