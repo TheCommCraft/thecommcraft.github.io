@@ -101,6 +101,7 @@ function anchor(x, a, b) {
         player.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
         player.x = anchor(player.x, player.width / 2 + 12, app.screen.width - player.width / 2 - 12);
         player.y = anchor(player.y, player.height / 2 + 12, app.screen.height - player.height / 2 - 12);
+        shield.position = app.stage.getMousePosition();
         shield.x = anchor(shield.x, player.x - player.width / 2 + shield.width / 2 + 4, player.x + player.width / 2 - shield.width / 2 - 4);
         shield.y = anchor(shield.y, player.y - player.width / 2 + shield.height / 2 + 4, player.y + player.height / 2 - shield.height / 2 - 4);
     });
