@@ -53,27 +53,35 @@ function keyboard(value) {
     const app = new Application();
 
     // Initialize the application
-    await app.init({ background: '#1099bb', resizeTo: window });
+    await app.init({ background: '#fff', width: 128*4, height: 128*4 });
 
     // Append the application canvas to the document body
     document.body.appendChild(app.canvas);
 
-    // Load the bunny texture
-    const texture = await Assets.load('https://pixijs.com/assets/bunny.png');
+    // Load the player texture
+    const texture = await Assets.load('shield.png');
+    const background = await Assets.load('dodgebackground.png');
+    const box = await Assets.load('hitbox.png');
 
-    // Create a bunny Sprite
-    const bunny = new Sprite(texture);
+    // Create a player Sprite
+    const player = new Sprite(box);
+    const shield = new Sprite(texture);
+    const bg = new Sprite(background);
 
     const wasd = [keyboard("w"), keyboard("a"), keyboard("s"), keyboard("d")];
 
     // Center the sprite's anchor point
-    bunny.anchor.set(0.5);
+    bg.anchor.set(0.5);
+    player.anchor.set(0.5);
+    shield.anchor.set(0.5)
 
     // Move the sprite to the center of the screen
-    bunny.x = app.screen.width / 2;
-    bunny.y = app.screen.height / 2;
+    player.x = app.screen.width / 2;
+    player.y = app.screen.height / 2;
 
-    app.stage.addChild(bunny);
+    app.stage.addChild(bg);
+    app.stage.addChild(player);
+    app.stage.addChild(shield);
 
     // Listen for animate update
     app.ticker.add((time) =>
@@ -81,7 +89,7 @@ function keyboard(value) {
         // Just for fun, let's rotate mr rabbit a little.
         // * Delta is 1 if running at 100% performance *
         // * Creates frame-independent transformation *
-        bunny.position.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
-        bunny.position.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
+        player.position.x += time.deltaTime * 3.0 * (wasd[3].isDown - wasd[1].isDown);
+        player.position.y += time.deltaTime * 3.0 * (wasd[2].isDown - wasd[0].isDown);
     });
 })();
