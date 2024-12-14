@@ -102,7 +102,7 @@ function makeCross(pos) {
     app.stage.addChild(shield);
 
     let countdown = 30.0;
-    const crosses = [];
+    window.crosses = [];
 
     let mousePos = new Point(app.screen.width / 2, app.screen.width / 2);
     app.stage.eventMode = 'static';
