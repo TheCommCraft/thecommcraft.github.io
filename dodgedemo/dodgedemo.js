@@ -131,16 +131,16 @@ function makeCross(pos) {
         for (const cross of crosses.values()) {
           cross.countdown -= time.deltaTime;
           if (cross.countdown > 60) {
-            cross.visible = !((cross.countdown / 5) % 2);
+            cross.visible = !Math.floor((cross.countdown / 5) % 2);
           }
           else if (cross.countdown > 30) {
-            cross.visible = !((cross.countdown / 3) % 2);
+            cross.visible = !Math.floor((cross.countdown / 3) % 2);
           }
           else if (cross.countdown > 10) {
-            cross.visible = !((cross.countdown / 2) % 2);
+            cross.visible = !Math.floor((cross.countdown / 2) % 2);
           }
           else if (cross.countdown >= 0) {
-            cross.visible = !(cross.countdown % 2);
+            cross.visible = !Math.floor(cross.countdown % 2);
           }
           else {
             app.stage.removeChild(cross);
