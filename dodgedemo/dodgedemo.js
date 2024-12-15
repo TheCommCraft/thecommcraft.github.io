@@ -54,6 +54,7 @@ function anchor(x, a, b) {
 function makeCross(pos) {
   const crossSprite = new Sprite(crossAsset);
   app.stage.addChild(crossSprite)
+  crossSprite.scale = 0.5;
   crossSprite.position = pos;
   crossSprite.countdown = 180;
   crossSprite.anchor.set(0.5);
