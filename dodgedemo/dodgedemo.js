@@ -77,6 +77,7 @@ function makeCross(pos) {
     const background = await Assets.load('dodgebackground.png');
     const box = await Assets.load('hitbox.png');
     window.crossAsset = await Assets.load('cross.png');
+    window.damagingCrossAsset = await Assets.load('damaging_cross.png');
 
     // Create a player Sprite
     const player = new Sprite(box);
@@ -138,6 +139,7 @@ function makeCross(pos) {
             cross.visible = !Math.floor((cross.countdown / 5) % 2);
           }
           else if (cross.countdown >= 0) {
+            cross.texture = damagingCrossAsset;
             cross.visible = true;
           }
           else {
