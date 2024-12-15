@@ -138,6 +138,9 @@ function makeCross(pos) {
           else if (cross.countdown > 60) {
             cross.visible = !Math.floor((cross.countdown / 5) % 2);
           }
+          else if (cross.countdown > 30) {
+            cross.visible = !Math.floor((cross.countdown / 3) % 2);
+          }
           else if (cross.countdown >= 0) {
             cross.texture = damagingCrossAsset;
             cross.visible = true;
