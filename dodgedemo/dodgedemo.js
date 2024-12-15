@@ -134,11 +134,11 @@ function makeCross(pos) {
           if (cross.countdown > 90) {
             cross.visible = !Math.floor((cross.countdown / 10) % 2);
           }
-          else if (cross.countdown > 30) {
+          else if (cross.countdown > 60) {
             cross.visible = !Math.floor((cross.countdown / 5) % 2);
           }
           else if (cross.countdown >= 0) {
-            cross.visible = !Math.floor((cross.countdown / 2) % 2);
+            cross.visible = true;
           }
           else {
             app.stage.removeChild(cross);
