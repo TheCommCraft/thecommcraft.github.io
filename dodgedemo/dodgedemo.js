@@ -119,7 +119,7 @@ function makeCross(pos) {
         // * Creates frame-independent transformation *
         countdown -= time.deltaTime;
         if (countdown <= 0) {
-          countdown = Math.random() * 120;
+          countdown = Math.random() * 60;
           crosses.push(makeCross(new Point(crossAsset.width / 2 + 8 + Math.random() * (app.screen.width - crossAsset.width - 16), crossAsset.height / 2 + 8 + Math.random() * (app.screen.height - crossAsset.height - 16))));
         }
         player.x += time.deltaTime * 4.0 * (wasd[3].isDown - wasd[1].isDown);
