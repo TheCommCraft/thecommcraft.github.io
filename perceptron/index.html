@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <script src="script.js"></script>
+        <div id="box">
+            <div id="dataEditor">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Volume</th>
+                            <th>Mass</th>
+                            <th>Floats</th>
+                            <th>Remove</th>
+                        </tr>
+                        <tr>
+                            <td><input value="1" type="number" onbeforeinput="return handleInput(event);"></td>
+                            <td><input value="5" type="number" onbeforeinput="return handleInput(event);"></td>
+                            <td><input type="checkbox"></td>
+                            <td onclick="this.parentNode.remove();">Remove</td>
+                        </tr>
+                        <tr>
+                            <td><input value="2" type="number" onbeforeinput="return handleInput(event);"></td>
+                            <td><input value="2" type="number" onbeforeinput="return handleInput(event);"></td>
+                            <td><input type="checkbox"></td>
+                            <td onclick="this.parentNode.remove();" class="remover">Remove</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button onclick="addRow();" class="adder">Add Row</button>
+            </div>
+        </div>
+    </body>
+</html>

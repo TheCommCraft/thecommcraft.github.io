@@ -1,0 +1,30 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+body {
+    margin: 0;
+}
+#box {
+    width: calc(100% - 23.2px);
+    margin: 10px;
+    height: calc(100% - 23.2px);
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+.remover {
+    cursor: pointer;
+}
+#dataEditor {
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    width: min-content;
+    margin: 5px;
+}
+.adder {
+    margin: 5px;
+}
